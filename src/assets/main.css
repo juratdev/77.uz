@@ -1,0 +1,8 @@
+@import "./icomoon/style.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.containerMain {
+  @apply container px-4 mx-auto;
+}
