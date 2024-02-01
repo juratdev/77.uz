@@ -1,11 +1,12 @@
 <script setup>
-import CustomHeader from "./components/layout/customHeader.vue";
-import Categories from "./components/categories.vue";
+import CustomHeader from "./components/Base/CustomHeader.vue";
+import { RouterView } from "vue-router";
 </script>
 
 <template>
   <div class="bg-[#F0F3F7]">
     <CustomHeader />
-    <Categories />
+    <RouterView></RouterView>
+    <!-- FOOTER -->
   </div>
 </template>

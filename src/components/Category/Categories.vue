@@ -1,5 +1,5 @@
 <script setup>
-import CategoriesItem from "./categoriesItem.vue";
+import CategoriesItem from "./CategoriesItem.vue";
 </script>
 
 <template>
@@ -24,7 +24,7 @@ import CategoriesItem from "./categoriesItem.vue";
         </button>
       </div>
       <div class="text-center category__title">
-        <h1 class="text-[2rem] font-[700] mb-[.5rem]">Категории</h1>
+        <h1 class="text-[2rem] font-[700] mb-[.5rem]">{{ $t("categories.title") }}</h1>
         <p class="text-[#8E9297]">
           Вы можете найти все категории, которые вам нужны от покупателя
         </p>

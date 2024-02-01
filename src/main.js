@@ -1,12 +1,14 @@
-import './assets/main.css'
+import "./assets/main.css";
 
-import { createApp } from 'vue'
-import App from './App.vue'
-// import router from './router' 
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import i18n from "./locales/i18n";
+import VClickOutside from "./directives/VClickOutside";
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.mount('#app')
-// app.use(router)
-
-
+app.use(router);
+app.use(i18n);
+app.directive("click-outside", VClickOutside);
+app.mount("#app");

@@ -89,7 +89,7 @@ export const data = [
   },
   {
     id: 9,
-    title: "",
+    title: "Random Product",
     region: "Toshkent",
     phone: "+998 71 200 70 07",
     price: "2 599 000",
