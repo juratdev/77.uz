@@ -7,7 +7,7 @@ export const data = [
     price: "2 599 000",
     priceType: "uzs",
     category: "Erkak kiyimlari",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -18,7 +18,7 @@ export const data = [
     price: "204 000 000",
     priceType: "uzs",
     category: "Avtomobil",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -29,7 +29,7 @@ export const data = [
     price: "280 000",
     priceType: "uzs",
     category: "Erkak kiyimlari",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -40,7 +40,7 @@ export const data = [
     price: "4 820 000",
     priceType: "uzs",
     category: "Erkak poyafzallari",
-    image: "../../src/Assets/productsImages/shoesMan.png",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -51,7 +51,7 @@ export const data = [
     price: "4 820 000",
     priceType: "uzs",
     category: "Ayol poyafzallari",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -62,7 +62,7 @@ export const data = [
     price: "4 500 000",
     priceType: "uzs",
     category: "Soatlar",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -73,7 +73,7 @@ export const data = [
     price: "320 000 000",
     priceType: "uzs",
     category: "Avtomobil",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -84,7 +84,7 @@ export const data = [
     price: "500",
     priceType: "usd",
     category: "Avtomobil",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -95,7 +95,7 @@ export const data = [
     price: "2 599 000",
     priceType: "uzs",
     category: "Erkak kiyimlari",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -106,7 +106,7 @@ export const data = [
     price: "204 000 000",
     priceType: "uzs",
     category: "Avtomobil",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -117,7 +117,7 @@ export const data = [
     price: "280 000",
     priceType: "uzs",
     category: "Erkak kiyimlari",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
   {
@@ -128,7 +128,7 @@ export const data = [
     price: "4 820 000",
     priceType: "uzs",
     category: "Erkak poyafzallari",
-    image: "",
+    image: "/images/products/cap.png",
     time: "Kecha, 19:20",
   },
 ];

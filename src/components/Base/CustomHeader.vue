@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { data } from "../../data/uz";
 
 const toggleLanguages = ref(false);
 
@@ -24,7 +23,7 @@ const changeLocale = (locale) => {
 
 <template>
   <header
-    class="sticky top-0 z-0 py-2 mb-4 border-b border-gray-00 bg-white/90 md:mb-3"
+    class="sticky top-0 z-50 py-3 mb-4 border-b md:py-5 md:mb-3 border-gray-00 backdrop-blur-[6px] bg-white/90"
   >
     <div class="flex items-center justify-between containerMain">
       <div class="flex items-center gap-6">
@@ -38,15 +37,19 @@ const changeLocale = (locale) => {
               <span
                 v-if="currentLocale === 'ru'"
                 class="flex items-center justify-center space-x-2"
-                ><img src="../../assets/images/header/ru.svg" alt="Русский" />
+                ><img
+                  class="w-5 h-5 shrink-0"
+                  src="../../assets/images/header/ru.svg"
+                  alt="Русский"
+                />
                 <span class="sm:hidden">ru</span>
                 <span class="max-sm:hidden">Русский</span></span
               >
               <span v-else class="flex items-center justify-center space-x-2">
                 <img
+                  class="w-5 h-5 shrink-0"
                   src="../../assets/images/header/uz.svg"
                   alt="O’zbekcha"
-                  class="shrink-0"
                 />
                 <span class="sm:hidden">uz</span>
                 <span
@@ -63,17 +66,17 @@ const changeLocale = (locale) => {
           <Transition name="fade-up" mode="out-in">
             <div
               v-show="toggleLanguages"
-              class="absolute shadow left-0 min-w-full overflow-hidden translate-y-full bg-white rounded-lg w-max -bottom-1 z-1 dropdown-shadow"
+              class="absolute left-0 min-w-full overflow-hidden translate-y-full bg-white rounded-lg shadow w-max -bottom-1 z-1 dropdown-shadow"
             >
-              <ul>
+              <div>
                 <button
                   @click="changeLocale('ru')"
                   class="flex items-center gap-2 px-4 cursor-pointer group/lang"
                 >
                   <img
+                    class="w-5 h-5 shrink-0"
                     src="../../assets/images/header/ru.svg"
                     alt="Русский"
-                    class="shrink-0"
                   /><span
                     class="w-full leading-6 py-2 relative group-hover/lang:text-blue transition-300 after:content-[''] after:absolute after:left-0 after:-bottom-px after:w-[calc(100%+16px)] after:h-px after:bg-gray-4 group-last/lang:after:hidden max-sm:uppercase"
                     >Русский</span
@@ -84,15 +87,15 @@ const changeLocale = (locale) => {
                   class="flex items-center gap-2 px-4 cursor-pointer group/lang"
                 >
                   <img
+                    class="w-5 h-5 shrink-0"
                     src="../../assets/images/header/uz.svg"
                     alt="O’zbekcha"
-                    class="shrink-0"
                   /><span
                     class="w-full leading-6 py-2 relative group-hover/lang:text-blue transition-300 after:content-[''] after:absolute after:left-0 after:-bottom-px after:w-[calc(100%+16px)] after:h-px after:bg-gray-4 group-last/lang:after:hidden max-sm:uppercase"
                     >O’zbekcha</span
                   >
                 </button>
-              </ul>
+              </div>
             </div>
           </Transition>
         </div>
@@ -112,7 +115,7 @@ const changeLocale = (locale) => {
       </div>
       <a
         href="/"
-        class="absolute top-0 left-[50%] -translate-x-1/2 bg-white border border-t-0 border-gray-4 rounded-b-[20px] p-3 md:px-4 md:py-3"
+        class="absolute top-0 left-[50%] -translate-x-1/2 bg-white border border-t-0 border-gray-4 rounded-b-[20px] p-3 md:px-4 md:py-3 shadow-3xl"
       >
         <img
           class="max-md:h-12"
@@ -126,17 +129,18 @@ const changeLocale = (locale) => {
           href="#"
           class="flex items-center gap-2 text-dark text-sm font-semibold leading-5 hover:text-blue transition-300 max-sm:p-1.5 max-sm:bg-gray-bg max-sm:rounded-lg"
         >
+          <i class="text-lg icon-like"></i>
           <span class="max-md:hidden">Избранные</span></a
         >
-        <span class="w-px h-8 bg-gray-bg max-sm:hidden"></span>
+        <span class="h-8 bg-gray-bg max-sm:hidden"></span>
         <button
-          class="bg-gray-4 text-dark hover:bg-gray-3 px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg relative transition-300 active:scale-95 disabled:bg-gray-bg disabled:text-gray-2 max-sm:!p-2.5"
+          class="bg-gray-4 text-dark hover:bg-[#c8c8c8] px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg relative active:scale-95 disabled:bg-gray-bg disabled:text-gray-2 max-sm:!p-2.5 transition duration-300"
           type="button"
         >
           <span
-            class="gap-2 text-center opacity-100 flex-center transition-300 whitespace-nowrap"
-            ><span class="max-sm:hidden">Войти</span
-            ><span class="text-xl leading-5 icon-login"></span
+            class="flex items-center justify-center gap-2 text-center transition duration-300 opacity-100 whitespace-nowrap"
+            ><span class="text-lg max-sm:hidden">Войти</span
+            ><span class="text-lg leading-5 icon-exit"></span
           ></span>
         </button>
       </div>

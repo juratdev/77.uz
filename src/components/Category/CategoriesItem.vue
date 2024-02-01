@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+import { defineProps } from "vue";
+const item = defineProps({
+  item: Object,
+});
+</script>
 
 <template>
   <a class="flex items-center cursor-pointer">

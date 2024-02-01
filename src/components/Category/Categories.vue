@@ -1,5 +1,6 @@
 <script setup>
 import CategoriesItem from "./CategoriesItem.vue";
+import { categories } from "../../data/uz";
 </script>
 
 <template>
@@ -18,19 +19,23 @@ import CategoriesItem from "./CategoriesItem.vue";
           ref="searchModel"
         />
         <button
-          class="py-[10px] px-[22px] rounded-[5px] top-[12%] absolute right-[.5rem] bg-[#16191D] text-white z-[2] hover:bg-white hover:border-2 hover:border-[black] hover:text-black"
+          class="py-[10px] px-[22px] rounded-[5px] top-[12%] absolute right-[.5rem] bg-[#16191D] text-white z-[2] hover:bg-white hover:text-black border-2 border-transparent hover:border-black transition-all duration-300"
         >
           Поиск
         </button>
       </div>
       <div class="text-center category__title">
-        <h1 class="text-[2rem] font-[700] mb-[.5rem]">{{ $t("categories.title") }}</h1>
+        <h1 class="text-[2rem] font-[700] mb-[.5rem]">
+          {{ $t("categories.title") }}
+        </h1>
         <p class="text-[#8E9297]">
           Вы можете найти все категории, которые вам нужны от покупателя
         </p>
       </div>
-      <div class="grid mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5">
-        <CategoriesItem />
+      <div
+        class="grid pb-10 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5"
+      >
+        <CategoriesItem v-for="item in categories" :item="item" />
       </div>
     </div>
   </section>

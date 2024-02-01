@@ -12,6 +12,9 @@ const messages = {
     search: {
       placeholder: "Izlash",
     },
+    products: {
+      title: "E'lonlar",
+    },
   },
   ru: {
     categories: {
@@ -22,6 +25,9 @@ const messages = {
     },
     search: {
       placeholder: "Поиск",
+    },
+    products: {
+      title: "Объявления",
     },
   },
 };

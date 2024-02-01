@@ -6,3 +6,12 @@
 .containerMain {
   @apply container px-4 mx-auto;
 }
+
+.bg-gray-bg {
+  @apply bg-[#F0F3F6];
+  @apply w-[1px];
+}
+
+.bg-gray-4 {
+  @apply bg-[#eaedf0];
+}

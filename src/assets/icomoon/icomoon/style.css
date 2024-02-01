@@ -1,19 +1,18 @@
 @font-face {
-  font-family: "icomoon";
-  src: url("fonts/icomoon.eot?tmno9a");
-  src: url("fonts/icomoon.eot?tmno9a#iefix") format("embedded-opentype"),
-    url("fonts/icomoon.ttf?tmno9a") format("truetype"),
-    url("fonts/icomoon.woff?tmno9a") format("woff"),
-    url("fonts/icomoon.svg?tmno9a#icomoon") format("svg");
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?okkbyk');
+  src:  url('fonts/icomoon.eot?okkbyk#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?okkbyk') format('truetype'),
+    url('fonts/icomoon.woff?okkbyk') format('woff'),
+    url('fonts/icomoon.svg?okkbyk#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"],
-[class*=" icon-"] {
+[class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "icomoon" !important;
+  font-family: 'icomoon' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -26,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-like:before {
+  content: "\e901";
+}
 .icon-suitcase:before {
   content: "\e90b";
 }
@@ -94,9 +96,6 @@
 }
 .icon-exit:before {
   content: "\e905";
-}
-.icon-like:before {
-  content: "\e901";
 }
 .icon-phone:before {
   content: "\e900";

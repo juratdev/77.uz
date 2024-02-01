@@ -1,7 +1,18 @@
 <script setup>
-const props = defineProps({ productId: String, producTitle: String });
+import { ref } from "vue";
+defineProps({
+  product: {
+    id: String,
+    title: String,
+    image: String,
+  },
+});
+
+const like = ref(false);
 
 const addToSaved = (id) => {
+  like.value = !like.value;
+
   const savedProducts = localStorage.getItem("savedProducts");
 
   if (!savedProducts) {
@@ -21,13 +32,22 @@ const addToSaved = (id) => {
 </script>
 
 <template>
-  <div class="product-card w-[500px]">
-    <h1 class="title">{{ props.producTitle }}</h1>
-    <button
-      @click="addToSaved(`${props.productId}`)"
-      class="bg-black px-2 py-4 text-white"
-    >
-      Qo'shish
-    </button>
+  <div class="relative cursor-pointer product-card">
+    <div>
+      <img
+        :src="product.image"
+        class="w-full rounded-t-lg"
+        :alt="product.title"
+      />
+    </div>
+    <div>
+      <button @click="addToSaved(product.id)" class="absolute top-3 left-3">
+        <i v-if="!like" class="text-2xl text-white icon-like"></i>
+        <i v-else class="text-2xl text-red-500 icon-like"></i>
+      </button>
+
+      <span>Tashkent</span>
+      <h1 class="title">{{ product.title }}</h1>
+    </div>
   </div>
 </template>
