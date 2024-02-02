@@ -42,8 +42,10 @@ const addToSaved = (id) => {
     </div>
     <div>
       <button @click="addToSaved(product.id)" class="absolute top-3 left-3">
-        <i v-if="!like" class="text-2xl text-white icon-like"></i>
-        <i v-else class="text-2xl text-red-500 icon-like"></i>
+        <i
+          class="text-2xl text-white"
+          :class="like ? 'icon-liked' : 'icon-like'"
+        ></i>
       </button>
 
       <span>Tashkent</span>
