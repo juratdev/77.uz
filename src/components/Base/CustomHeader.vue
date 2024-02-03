@@ -1,7 +1,11 @@
 <script setup>
 import { ref } from "vue";
+import { defineAsyncComponent } from "vue";
+
+const LoginModal = defineAsyncComponent(() => import("./LoginModal.vue"));
 
 const toggleLanguages = ref(false);
+const toggleLoginModal = ref(false);
 
 const handleLanguages = () => {
   toggleLanguages.value = !toggleLanguages.value;
@@ -18,6 +22,14 @@ const currentLocale = localStorage.getItem("locale")
 const changeLocale = (locale) => {
   localStorage.setItem("locale", locale);
   window.location.reload();
+};
+
+const openLoginModal = () => {
+  toggleLoginModal.value = true;
+};
+
+const closeLoginModal = () => {
+  toggleLoginModal.value = false;
 };
 </script>
 
@@ -134,6 +146,7 @@ const changeLocale = (locale) => {
         >
         <span class="h-8 bg-gray-bg max-sm:hidden"></span>
         <button
+          @click="openLoginModal"
           class="bg-gray-4 text-dark hover:bg-[#c8c8c8] px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg relative active:scale-95 disabled:bg-gray-bg disabled:text-gray-2 max-sm:!p-2.5 transition duration-300"
           type="button"
         >
@@ -143,6 +156,12 @@ const changeLocale = (locale) => {
             ><span class="text-lg leading-5 icon-exit"></span
           ></span>
         </button>
+        <transition name="fade" mode="out-in">
+          <LoginModal
+            @close:modal="closeLoginModal"
+            v-show="toggleLoginModal"
+          />
+        </transition>
       </div>
     </div>
   </header>
