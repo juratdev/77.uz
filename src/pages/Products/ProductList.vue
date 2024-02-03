@@ -14,7 +14,7 @@ async function pushProducts(product) {
 
 async function loadProductsList() {
   try {
-    const response = await storeInstance.get(`/list/ads`);
+    const response = await storeInstance.get(`/list/ads/`);
 
     if (!response) {
       throw new Error("Internet bilan aloqa yo'q");
@@ -50,37 +50,33 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="product-list-page container mx-auto sm:px-4 px-2 py-6">
+  <div class="container px-2 py-6 mx-auto product-list-page sm:px-4">
     <div class="breadcrumb">
       <p>Home page</p>
     </div>
-    <div class="content flex my-4">
-      <aside class="filter-side bg-white rounded-lg p-4">
-        <h1 class="title text-xl font-bold">Filter goes here</h1>
+    <div class="flex my-4 content">
+      <aside class="p-4 bg-white rounded-lg filter-side">
+        <h1 class="text-xl font-bold title">Filter goes here</h1>
       </aside>
-      <main class="products-list-side ml-4">
-        <h1 class="title text-3xl font-bold">Продукты</h1>
+      <main class="ml-4 products-list-side">
+        <h1 class="text-3xl font-bold title">Продукты</h1>
         <div class="search-bar">
           <input
             type="text"
-            class="outline-none border rounded px-4 py-2 bg-white"
+            class="px-4 py-2 bg-white border rounded outline-none"
           />
         </div>
-        <div class="count text-gray-300">{{ count }} объявлений</div>
-        <div class="products space-y-4">
-          <div class="product bg-white p-4 rounded-xl">
-            <h1 class="product-title font-semibold text-2xl">
-              Ветровка для мужчин, дождевик, куртка
-            </h1>
-          </div>
-          <div class="product bg-white p-4 rounded-xl">
-            <h1 class="product-title font-semibold text-2xl">
-              Ветровка для мужчин, дождевик, куртка
-            </h1>
-          </div>
-          <div class="product bg-white p-4 rounded-xl">
-            <h1 class="product-title font-semibold text-2xl">
-              Ветровка для мужчин, дождевик, куртка
+        <div class="text-gray-300 count">{{ count }} объявлений</div>
+        <div
+          class="grid grid-cols-2 gap-6 py-8 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10 products"
+        >
+          <div
+            v-for="(product, key) in products"
+            :key="key"
+            class="p-4 bg-white product rounded-xl"
+          >
+            <h1 class="text-2xl font-semibold product-title">
+              {{ product.name }}
             </h1>
           </div>
         </div>

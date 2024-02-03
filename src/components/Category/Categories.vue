@@ -1,6 +1,36 @@
 <script setup>
+import { storeInstance } from "@/instances";
+import { onMounted } from "vue";
+import { ref } from "vue";
 import CategoriesItem from "./CategoriesItem.vue";
-import { categories } from "../../data/uz";
+
+const categories = ref([]);
+
+async function loadCategory() {
+  try {
+    const response = await storeInstance.get(`/category/`);
+
+    if (!response) {
+      throw new Error("Internet bilan aloqa yo'q");
+    }
+
+    if (response.status !== 200) {
+      throw new Error(response.statusText);
+    }
+
+    response.data.forEach(async (p) => {
+      categories.value.push(p);
+    });
+
+    return;
+  } catch (error) {
+    alert(error);
+  }
+}
+
+onMounted(async () => {
+  await loadCategory();
+});
 </script>
 
 <template>
@@ -14,14 +44,14 @@ import { categories } from "../../data/uz";
           type="search"
           id="search"
           class="border-2 rounded-[8px] outline-none w-full px-[2.5rem] py-[1rem]"
-          placeholder="Что вы ищите?"
+          :placeholder="$t('search.placeholder')"
           autocomplete="off"
           ref="searchModel"
         />
         <button
           class="py-[10px] px-[22px] rounded-[5px] top-[12%] absolute right-[.5rem] bg-[#16191D] text-white z-[2] hover:bg-white hover:text-black border-2 border-transparent hover:border-black transition-all duration-300"
         >
-          Поиск
+          {{ $t("search.text") }}
         </button>
       </div>
       <div class="text-center category__title">
@@ -29,13 +59,20 @@ import { categories } from "../../data/uz";
           {{ $t("categories.title") }}
         </h1>
         <p class="text-[#8E9297]">
-          Вы можете найти все категории, которые вам нужны от покупателя
+          {{ $t("categories.minTitle") }}
         </p>
       </div>
+
       <div
         class="grid pb-10 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5"
       >
-        <CategoriesItem v-for="item in categories" :item="item" />
+        <CategoriesItem
+          v-for="item in categories"
+          :key="item.id"
+          :title="item.name"
+          :icon="item.icon"
+          :product_count="item.product_count"
+        />
       </div>
     </div>
   </section>
