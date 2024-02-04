@@ -8,3 +8,7 @@ export const storeInstance = axios.create({
 export const authInstance = axios.create({
   baseURL: config.SERVER_URL + "/accounts",
 });
+
+export const reverseGeocodingInstance = axios.create({
+  baseURL: "https://nominatim.openstreetmap.org",
+});

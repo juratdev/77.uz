@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from "vue";
-import { authInstance } from "@/instances";
-import leaflet from "leaflet";
-import "leaflet/dist/leaflet.css";
+import { authInstance, storeInstance } from "@/instances";
+import { defineAsyncComponent } from "vue";
+import { onMounted } from "vue";
 
+const MapModal = defineAsyncComponent(() => import("./MapModal.vue"));
 const emit = defineEmits(["close:modal"]);
-const typeModal = ref("signup");
-const map = ref();
-const marker = ref();
+const typeModal = ref("login");
 
 const switchTypeModal = (type) => {
   typeModal.value = type;
@@ -27,6 +26,20 @@ const userDetailsSignUp = ref({
 
 const userDetailsLogin = ref({ phone_number: "", password: "" });
 
+const categories = ref([]);
+
+async function fetchCategories() {
+  try {
+    const response = await storeInstance.get("/category/");
+    if (!response) throw new Error("Internet bilan aloqa mavjud emas");
+    if (response.status !== 200) throw new Error(response.statusText);
+
+    categories.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function login() {
   try {
     if (
@@ -45,7 +58,7 @@ async function login() {
       return;
     }
 
-    const response = await authInstance.post("/login", {
+    const response = await authInstance.post("/login/", {
       ...userDetailsLogin.value,
     });
 
@@ -57,10 +70,7 @@ async function login() {
       throw new Error(response.statusText);
     }
 
-    /**
-     * token bo'sa shu joyda tokenni olib localStorage da saqlash
-     */
-    // localStorage.setItem("token", response.data.token)
+    console.log(response);
     alert("Akkauntga kirildi!");
   } catch (error) {
     alert(error.message);
@@ -102,51 +112,14 @@ async function openMap() {
     }
 
     typeModal.value = "map";
-
-    setTimeout(() => {
-      map.value = leaflet.map("map", {
-        center: [41.32503151466505, 69.24269508726519],
-        zoom: 15,
-      });
-
-      leaflet
-        .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png")
-        .addTo(map.value);
-
-      const customMarker = leaflet
-        .marker([41.32503151466505, 69.24269508726519], { draggable: true })
-        .addTo(map.value);
-
-      marker.value = customMarker;
-    }, 1000);
   } catch (error) {
     alert(error);
   }
 }
 
-async function signUp() {
-  try {
-    const response = await authInstance.post("/login", {
-      ...userDetailsLogin.value,
-    });
-
-    if (!response) {
-      throw new Error("Internet bilan aloqa mavjud emas");
-    }
-
-    if (response.status !== 200) {
-      throw new Error(response.statusText);
-    }
-
-    /**
-     * token bo'sa shu joyda tokenni olib localStorage da saqlash
-     */
-    // localStorage.setItem("token", response.data.token)
-    alert("Akkauntga kirildi!");
-  } catch (error) {
-    alert(error.message);
-  }
-}
+onMounted(async () => {
+  await fetchCategories();
+});
 </script>
 
 <template>
@@ -171,22 +144,24 @@ async function signUp() {
         </button>
       </div>
       <form @submit.prevent="login" class="form">
-        <div class="form-box">
+        <div class="flex flex-col items-start form-box">
           <label for="login">Логин</label>
           <input
             v-model="userDetailsLogin.phone_number"
             type="text"
             name="login"
             id="login"
+            class="w-full px-4 py-2 border rounded outline-none"
           />
         </div>
-        <div class="form-box">
+        <div class="flex flex-col items-start form-box">
           <label for="password">Пароль</label>
           <input
             v-model="userDetailsLogin.password"
             type="password"
             name="password"
             id="password"
+            class="w-full px-4 py-2 border rounded outline-none"
           />
         </div>
         <div class="buttons">
@@ -248,28 +223,12 @@ async function signUp() {
             id="product-category"
           >
             <option
+              v-for="category in categories"
+              :key="category.id"
               class="w-full px-4 py-2 border rounded outline-none"
-              :value="1"
+              :value="category.id"
             >
-              Женская одежда
-            </option>
-            <option
-              class="w-full px-4 py-2 border rounded outline-none"
-              :value="2"
-            >
-              Женская одежда
-            </option>
-            <option
-              class="w-full px-4 py-2 border rounded outline-none"
-              :value="3"
-            >
-              Женская одежда
-            </option>
-            <option
-              class="w-full px-4 py-2 border rounded outline-none"
-              :value="4"
-            >
-              Женская одежда
+              {{ category.name }}
             </option>
           </select>
         </div>
@@ -296,13 +255,23 @@ async function signUp() {
         </div>
       </form>
     </div>
+    <MapModal
+    @update:go-back="switchTypeModal('signup')"
+      @success:sign-up-done="switchTypeModal('success')"
+      :user-details-sign-up="userDetailsSignUp"
+      v-if="typeModal === 'map'"
+    />
     <div
-      v-show="typeModal === 'map'"
-      class="bg-white rounded-lg p-4 h-[600px] w-[400px]"
+      v-if="typeModal === 'success'"
+      class="success text-center rounded p-4 bg-white"
     >
-      <h1>Lokatsiya</h1>
-      <div ref="map" class="map w-full h-[90%]" id="map"></div>
-      <button @click="signUp" class="sign-up-action">Action</button>
+      <h1 class="title text-xl font-bold">Sizning so'rovingiz jo'natildi</h1>
+      <button
+        class="button bg-blue rounded text-white px-4 py-2 mt-4 font-bold"
+        @click="emit('close:modal')"
+      >
+        OK!
+      </button>
     </div>
   </div>
 </template>

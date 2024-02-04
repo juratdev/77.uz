@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { defineAsyncComponent } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
 
 const LoginModal = defineAsyncComponent(() => import("./LoginModal.vue"));
 
@@ -15,13 +18,12 @@ const closeLanguages = () => {
   toggleLanguages.value = false;
 };
 
-const currentLocale = localStorage.getItem("locale")
-  ? localStorage.getItem("locale")
-  : "uz";
+const currentLocale = ref(localStorage.getItem('locale'))
 
-const changeLocale = (locale) => {
-  localStorage.setItem("locale", locale);
-  window.location.reload();
+const changeLocale = (l) => {
+  localStorage.setItem("locale", l);
+  currentLocale.value = l
+  locale.value = l;
 };
 
 const openLoginModal = () => {
@@ -91,6 +93,7 @@ const closeLoginModal = () => {
                     alt="Русский"
                   /><span
                     class="w-full leading-6 py-2 relative group-hover/lang:text-blue transition-300 after:content-[''] after:absolute after:left-0 after:-bottom-px after:w-[calc(100%+16px)] after:h-px after:bg-gray-4 group-last/lang:after:hidden max-sm:uppercase"
+                    :class="{ 'text-blue': locale === 'ru' }"
                     >Русский</span
                   >
                 </button>
@@ -104,6 +107,7 @@ const closeLoginModal = () => {
                     alt="O’zbekcha"
                   /><span
                     class="w-full leading-6 py-2 relative group-hover/lang:text-blue transition-300 after:content-[''] after:absolute after:left-0 after:-bottom-px after:w-[calc(100%+16px)] after:h-px after:bg-gray-4 group-last/lang:after:hidden max-sm:uppercase"
+                    :class="{ 'text-blue': locale === 'uz' }"
                     >O’zbekcha</span
                   >
                 </button>
@@ -142,7 +146,7 @@ const closeLoginModal = () => {
           class="flex items-center gap-2 text-dark text-sm font-semibold leading-5 hover:text-blue transition-300 max-sm:p-1.5 max-sm:bg-gray-bg max-sm:rounded-lg"
         >
           <i class="text-lg icon-like"></i>
-          <span class="max-md:hidden">{{ $t("navbar.star") }}</span></a
+          <span class="max-md:hidden">{{ t("navbar.star") }}</span></a
         >
         <span class="h-8 bg-gray-bg max-sm:hidden"></span>
         <button
@@ -159,8 +163,8 @@ const closeLoginModal = () => {
         <transition name="fade" mode="out-in">
           <LoginModal
             @close:modal="closeLoginModal"
-            v-show="toggleLoginModal"
-          />
+            v-if="toggleLoginModal"
+          /> 
         </transition>
       </div>
     </div>
