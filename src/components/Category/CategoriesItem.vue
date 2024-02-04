@@ -3,7 +3,7 @@ import { defineProps } from "vue";
 defineProps({
   item: {
     id: String,
-    title: String,
+    name: String,
     icon: String,
     product_count: Number,
   },
@@ -25,7 +25,7 @@ defineProps({
         <h2
           class="text-base font-semibold leading-normal text-dark line-clamp-1"
         >
-          {{ item.title }}
+          {{ item.name }}
         </h2>
         <p class="text-sm font-normal text-gray-1 leading-130">
           {{ item.product_count }} объявлений
