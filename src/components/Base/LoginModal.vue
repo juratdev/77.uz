@@ -152,20 +152,20 @@ async function signUp() {
 <template>
   <div
     @click.self="emit('close:modal')"
-    class="login-modal-component fixed inset-0 flex items-center justify-center w-full h-screen bg-black bg-opacity-50"
+    class="fixed inset-0 flex items-center justify-center w-full h-screen bg-black bg-opacity-50 login-modal-component"
   >
     <div
       v-if="typeModal === 'login'"
-      class="modal-box-user bg-white rounded-lg p-4 h-auto relative"
+      class="relative h-auto p-4 bg-white rounded-lg modal-box-user"
     >
-      <div class="titles flex">
+      <div class="flex titles">
         <div class="left">
-          <h1 class="title text-2xl font-bold">Добро пожаловать!</h1>
+          <h1 class="text-2xl font-bold title">Добро пожаловать!</h1>
           <p class="desc">Войти в систему чтобы торговать в системе</p>
         </div>
         <button
           @click="emit('close:modal')"
-          class="right tet-7xl font-bold absolute top-4 right-4"
+          class="absolute font-bold right tet-7xl top-4 right-4"
         >
           &times;
         </button>
@@ -204,26 +204,26 @@ async function signUp() {
     </div>
     <div
       v-if="typeModal === 'signup'"
-      class="modal-box-seller bg-white rounded-lg p-4 h-auto"
+      class="h-auto p-4 bg-white rounded-lg modal-box-seller"
     >
-      <div class="titles flex">
+      <div class="flex titles">
         <div class="left">
-          <h1 class="title text-2xl font-bold">Подать заявку</h1>
+          <h1 class="text-2xl font-bold title">Подать заявку</h1>
           <p class="desc">Войти в систему чтобы торговать в системе</p>
         </div>
         <button
           @click="emit('close:modal')"
-          class="right tet-7xl font-bold absolute top-4 right-4"
+          class="absolute font-bold right tet-7xl top-4 right-4"
         >
           &times;
         </button>
       </div>
-      <form class="form space-y-4">
-        <div class="form-box flex flex-col items-start">
+      <form class="space-y-4 form">
+        <div class="flex flex-col items-start form-box">
           <label for="fio">Ф.И.О.</label>
           <input
             v-model.trim="userDetailsSignUp.full_name"
-            class="w-full outline-none border rounded py-2 px-4"
+            class="w-full px-4 py-2 border rounded outline-none"
             type="text"
             name="fio"
             id="fio"
@@ -234,7 +234,7 @@ async function signUp() {
           <input
             v-model.trim="userDetailsSignUp.project_name"
             type="text"
-            class="w-full outline-none border rounded py-2 px-4"
+            class="w-full px-4 py-2 border rounded outline-none"
             name="product-name"
             id="product-name"
           />
@@ -243,30 +243,30 @@ async function signUp() {
           <label for="product-category">Категория</label>
           <select
             v-model.trim="userDetailsSignUp.category"
-            class="w-full outline-none border rounded py-2 px-4"
+            class="w-full px-4 py-2 border rounded outline-none"
             name="product-category"
             id="product-category"
           >
             <option
-              class="w-full outline-none border rounded py-2 px-4"
+              class="w-full px-4 py-2 border rounded outline-none"
               :value="1"
             >
               Женская одежда
             </option>
             <option
-              class="w-full outline-none border rounded py-2 px-4"
+              class="w-full px-4 py-2 border rounded outline-none"
               :value="2"
             >
               Женская одежда
             </option>
             <option
-              class="w-full outline-none border rounded py-2 px-4"
+              class="w-full px-4 py-2 border rounded outline-none"
               :value="3"
             >
               Женская одежда
             </option>
             <option
-              class="w-full outline-none border rounded py-2 px-4"
+              class="w-full px-4 py-2 border rounded outline-none"
               :value="4"
             >
               Женская одежда
@@ -277,7 +277,7 @@ async function signUp() {
           <label for="phone">Телефон номер</label>
           <input
             v-model="userDetailsSignUp.phone_number"
-            class="w-full outline-none border rounded py-2 px-4"
+            class="w-full px-4 py-2 border rounded outline-none"
             type="text"
             name="phone"
             id="phone"

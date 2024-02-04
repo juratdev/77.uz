@@ -66,13 +66,7 @@ onMounted(async () => {
       <div
         class="grid pb-10 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5"
       >
-        <CategoriesItem
-          v-for="item in categories"
-          :key="item.id"
-          :title="item.name"
-          :icon="item.icon"
-          :product_count="item.product_count"
-        />
+        <CategoriesItem v-for="item in categories" :item="item" />
       </div>
     </div>
   </section>
