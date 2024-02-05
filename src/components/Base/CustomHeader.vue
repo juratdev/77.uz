@@ -18,11 +18,11 @@ const closeLanguages = () => {
   toggleLanguages.value = false;
 };
 
-const currentLocale = ref(localStorage.getItem('locale'))
+const currentLocale = ref(localStorage.getItem("locale"));
 
 const changeLocale = (l) => {
   localStorage.setItem("locale", l);
-  currentLocale.value = l
+  currentLocale.value = l;
   locale.value = l;
 };
 
@@ -37,16 +37,16 @@ const closeLoginModal = () => {
 
 <template>
   <header
-    class="sticky top-0 z-50 py-3 mb-4 border-b md:py-5 md:mb-3 border-gray-00 backdrop-blur-[6px] bg-white/90"
+    class="sticky top-0 z-50 py-3 mb-4 border-b md:py-4 md:mb-3 border-gray-00 backdrop-blur-[6px] bg-white/90"
   >
     <div class="flex items-center justify-between containerMain">
       <div class="flex items-center gap-6">
         <div class="relative z-0">
-          <div class="">
+          <div>
             <button
               v-click-outside="closeLanguages"
               @click="handleLanguages"
-              class="flex items-center gap-2 text-sm font-medium text-dark leading-130 hover:text-blue transition-300 max-sm:uppercase"
+              class="flex items-center gap-2 text-sm font-medium duration-300 text-dark leading-130 hover:text-blue transition-300 max-sm:uppercase"
             >
               <span
                 v-if="currentLocale === 'ru'"
@@ -56,8 +56,14 @@ const closeLoginModal = () => {
                   src="../../assets/images/header/ru.svg"
                   alt="Русский"
                 />
-                <span class="sm:hidden">ru</span>
-                <span class="max-sm:hidden">Русский</span></span
+                <span
+                  class="relative w-full py-2 leading-6 duration-300 sm:hidden group-hover/lang:text-blue transition-300 max-sm:uppercase"
+                  >ru</span
+                >
+                <span
+                  class="relative w-full py-2 leading-6 duration-300 max-sm:hidden group-hover/lang:text-blue transition-300 max-sm:uppercase"
+                  >Русский</span
+                ></span
               >
               <span v-else class="flex items-center justify-center space-x-2">
                 <img
@@ -65,9 +71,12 @@ const closeLoginModal = () => {
                   src="../../assets/images/header/uz.svg"
                   alt="O’zbekcha"
                 />
-                <span class="sm:hidden">uz</span>
                 <span
-                  class="w-full leading-6 py-2 relative group-hover/lang:text-blue transition-300 after:content-[''] after:absolute after:left-0 after:-bottom-px after:w-[calc(100%+16px)] after:h-px after:bg-gray-4 group-last/lang:after:hidden max-sm:uppercase"
+                  class="relative w-full py-2 leading-6 duration-300 sm:hidden group-hover/lang:text-blue transition-300 max-sm:uppercase"
+                  >uz</span
+                >
+                <span
+                  class="relative w-full py-2 leading-6 duration-300 group-hover/lang:text-blue transition-300 max-sm:uppercase max-sm:hidden"
                   >O’zbekcha</span
                 ></span
               >
@@ -91,8 +100,14 @@ const closeLoginModal = () => {
                     class="w-5 h-5 shrink-0"
                     src="../../assets/images/header/ru.svg"
                     alt="Русский"
-                  /><span
-                    class="w-full leading-6 py-2 relative group-hover/lang:text-blue transition-300 after:content-[''] after:absolute after:left-0 after:-bottom-px after:w-[calc(100%+16px)] after:h-px after:bg-gray-4 group-last/lang:after:hidden max-sm:uppercase"
+                  />
+                  <span
+                    class="relative w-full py-2 leading-6 duration-300 sm:hidden group-hover/lang:text-blue transition-300 max-sm:uppercase"
+                    :class="{ 'text-blue': locale === 'ru' }"
+                    >ru</span
+                  >
+                  <span
+                    class="relative w-full py-2 leading-6 duration-300 group-hover/lang:text-blue transition-300 max-sm:uppercase max-sm:hidden"
                     :class="{ 'text-blue': locale === 'ru' }"
                     >Русский</span
                   >
@@ -105,8 +120,14 @@ const closeLoginModal = () => {
                     class="w-5 h-5 shrink-0"
                     src="../../assets/images/header/uz.svg"
                     alt="O’zbekcha"
-                  /><span
-                    class="w-full leading-6 py-2 relative group-hover/lang:text-blue transition-300 after:content-[''] after:absolute after:left-0 after:-bottom-px after:w-[calc(100%+16px)] after:h-px after:bg-gray-4 group-last/lang:after:hidden max-sm:uppercase"
+                  />
+                  <span
+                    class="relative w-full py-2 leading-6 duration-300 sm:hidden group-hover/lang:text-blue transition-300 max-sm:uppercase"
+                    :class="{ 'text-blue': locale === 'uz' }"
+                    >uz</span
+                  >
+                  <span
+                    class="relative w-full py-2 leading-6 group-hover/lang:text-blue transition-300 max-sm:uppercase max-sm:hidden"
                     :class="{ 'text-blue': locale === 'uz' }"
                     >O’zbekcha</span
                   >
@@ -156,15 +177,12 @@ const closeLoginModal = () => {
         >
           <span
             class="flex items-center justify-center gap-2 text-center transition duration-300 opacity-100 whitespace-nowrap"
-            ><span class="text-lg max-sm:hidden">{{ $t("navbar.login") }}</span
+            ><span class="text-lg max-sm:hidden">{{ t("navbar.login") }}</span
             ><span class="text-lg leading-5 icon-exit"></span
           ></span>
         </button>
         <transition name="fade" mode="out-in">
-          <LoginModal
-            @close:modal="closeLoginModal"
-            v-if="toggleLoginModal"
-          /> 
+          <LoginModal @close:modal="closeLoginModal" v-if="toggleLoginModal" />
         </transition>
       </div>
     </div>

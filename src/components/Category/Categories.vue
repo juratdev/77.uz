@@ -36,7 +36,7 @@ onMounted(async () => {
 <template>
   <section class="bg-white">
     <div class="text-center containerMain">
-      <div class="w-[50%] mt-24 mx-auto top-[-2rem] relative">
+      <div class="w-[50%] mt-24 mx-auto top-[-2rem] relative max-sm:w-full">
         <i
           class="icon-search absolute left-3 top-5 text-[1.2rem] text-[#D5D8DB]"
         ></i>

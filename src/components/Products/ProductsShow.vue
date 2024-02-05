@@ -30,10 +30,10 @@ import ProductCard from "./ProductCard.vue";
 
     <RouterLink
       to="/products/list"
-      class="flex items-center justify-center gap-2 border-[2px] border-[#D6D6D6]/50 bg-gray-4 hover:bg-gray-3 transition-300 rounded-full py-3 px-7 text-base font-semibold leading-130 text-dark mx-auto"
+      class="flex items-center gap-3 border-[2px] border-[#D6D6D6]/50 bg-gray-4 hover:bg-gray-200 transition-300 duration-300 rounded-full py-3 px-7 text-base font-semibold leading-130 text-black"
     >
       {{ $t("products.buttonMore") }}
-      <i class="text-xl leading-5 -rotate-90 icon-doubleDown text-dark"></i>
+      <i class="text-base leading-5 text-black -rotate-90 icon-doubleDown"></i>
     </RouterLink>
   </div>
 </template>

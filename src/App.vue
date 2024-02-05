@@ -1,5 +1,6 @@
 <script setup>
 import CustomHeader from "./components/Base/CustomHeader.vue";
+import Footer from "./components/Footer/Footer.vue";
 import { RouterView } from "vue-router";
 </script>
 
@@ -11,6 +12,7 @@ import { RouterView } from "vue-router";
         <component :is="Component" />
       </transition>
     </router-view>
+    <Footer />
     <!-- FOOTER -->
   </div>
 </template>
