@@ -1,9 +1,39 @@
 <script setup>
-// import { defineAsyncComponent } from "vue";
-import { data } from "@/data/uz";
+import { storeInstance } from "@/instances";
+import { onMounted } from "vue";
+import { ref } from "vue";
+import { defineAsyncComponent } from "vue";
+// import { data } from "@/data/uz";
 
-// const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
-import ProductCard from "./ProductCard.vue";
+const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
+
+const product = ref([]);
+
+async function loadProducts() {
+  try {
+    const response = await storeInstance.get(`/list/ads/`);
+
+    if (!response) {
+      throw new Error("Internet bilan aloqa yo'q");
+    }
+
+    if (response.status !== 200) {
+      throw new Error(response.statusText);
+    }
+
+    response.data.results.forEach(async (p) => {
+      await product.value.push(p);
+    });
+
+    return;
+  } catch (error) {
+    alert(error);
+  }
+}
+
+onMounted(async () => {
+  await loadProducts();
+});
 </script>
 
 <template>
@@ -19,13 +49,9 @@ import ProductCard from "./ProductCard.vue";
       </p>
     </div>
     <div
-      class="grid grid-cols-2 gap-6 py-8 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10 products"
+      class="grid w-full grid-cols-2 gap-6 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10"
     >
-      <ProductCard
-        v-for="product in data"
-        :key="product.id"
-        v-bind="{ product }"
-      />
+      <ProductCard v-for="(item, key) in product" :key="key" :item="item" />
     </div>
 
     <RouterLink

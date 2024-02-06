@@ -256,7 +256,7 @@ onMounted(async () => {
       </form>
     </div>
     <MapModal
-    @update:go-back="switchTypeModal('signup')"
+      @update:go-back="switchTypeModal('signup')"
       @success:sign-up-done="switchTypeModal('success')"
       :user-details-sign-up="userDetailsSignUp"
       v-if="typeModal === 'map'"
