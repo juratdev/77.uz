@@ -33,19 +33,19 @@ const { t, locale } = useI18n();
           <a
             href="#"
             target="_blank"
-            class="flex items-center gap-1 text-sm font-semibold md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
+            class="flex items-center gap-1 text-sm font-semibold duration-300 md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
             ><img src="../../assets/images/footer/symbol.svg" alt="Symbol" />
             Доска объявлений</a
           ><a
             href="#"
             target="_blank"
-            class="flex items-center gap-1 text-sm font-semibold md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
+            class="flex items-center gap-1 text-sm font-semibold duration-300 md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
             ><img src="../../assets/images/footer/symbol.svg" alt="Symbol" />
             Условия пользования</a
           ><a
             href="tel: +998885005000"
             target="_blank"
-            class="flex items-center gap-1 text-sm font-semibold md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
+            class="flex items-center gap-1 text-sm font-semibold duration-300 md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
             ><img src="../../assets/images/footer/symbol.svg" alt="Symbol" />
             +998 88 500 50 00
           </a>
@@ -81,7 +81,7 @@ const { t, locale } = useI18n();
 
         <a
           href="https://uic.group/"
-          class="flex items-center justify-between gap-2"
+          class="flex items-center justify-between gap-2 transition duration-300 hover:scale-110"
         >
           <img src="../../assets/images/footer/uiclogo.svg" alt="uiclogo" />
           <img src="../../assets/images/footer/uictext.svg" alt="uictext" />
