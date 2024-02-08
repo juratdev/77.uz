@@ -3,11 +3,14 @@ import { storeInstance } from "@/instances";
 import { onMounted } from "vue";
 import { ref } from "vue";
 import CategoriesItem from "./CategoriesItem.vue";
+import SkeletonLoading from "@/components/ui/SkeletonLoading.vue";
 
 const categories = ref([]);
+const loading = ref(false);
 
 async function loadCategory() {
   try {
+    loading.value = true;
     const response = await storeInstance.get(`/category/`);
 
     if (!response) {
@@ -25,6 +28,10 @@ async function loadCategory() {
     return;
   } catch (error) {
     alert(error);
+  } finally {
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
   }
 }
 
@@ -63,10 +70,19 @@ onMounted(async () => {
         </p>
       </div>
 
-      <div
-        class="grid pb-10 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5"
-      >
-        <CategoriesItem v-for="item in categories" :item="item" />
+      <div>
+        <div
+          class="grid pb-10 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5"
+          v-show="!loading"
+        >
+          <CategoriesItem v-for="item in categories" :item="item" />
+        </div>
+        <div
+          class="grid pb-10 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5"
+          v-show="loading"
+        >
+          <SkeletonLoading type="category" v-for="i in 3" :key="i" v-show="loading" />
+        </div>
       </div>
     </div>
   </section>

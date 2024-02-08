@@ -3,14 +3,16 @@ import { storeInstance } from "@/instances";
 import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineAsyncComponent } from "vue";
-// import { data } from "@/data/uz";
+import SkeletonLoading from "../ui/SkeletonLoading.vue";
 
 const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
 
 const product = ref([]);
+const loading = ref(false);
 
 async function loadProducts() {
   try {
+    loading.value = true;
     const response = await storeInstance.get(`/list/ads/`);
 
     if (!response) {
@@ -28,6 +30,10 @@ async function loadProducts() {
     return;
   } catch (error) {
     alert(error);
+  } finally {
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
   }
 }
 
@@ -48,10 +54,19 @@ onMounted(async () => {
         {{ $t("products.minTitle") }}
       </p>
     </div>
-    <div
-      class="grid w-full grid-cols-2 gap-6 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10"
-    >
-      <ProductCard v-for="(item, key) in product" :key="key" :item="item" />
+    <div v-if="!loading">
+      <div
+        class="grid w-full grid-cols-2 gap-6 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10"
+      >
+        <ProductCard v-for="(item, key) in product" :key="key" :item="item" />
+      </div>
+    </div>
+    <div class="w-full" v-if="loading">
+      <div
+        class="grid w-full grid-cols-2 gap-6 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10"
+      >
+        <SkeletonLoading v-for="i in 6" :key="i" type="product" />
+      </div>
     </div>
 
     <RouterLink
