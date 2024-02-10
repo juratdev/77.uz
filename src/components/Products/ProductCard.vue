@@ -28,8 +28,12 @@ async function addToSaved(id) {
       like.value = true;
       const response = await storeInstance.post(
         `/favourite-product-create-by-id/`,
-        { product: id, device_id: "d5cec0cd-566c-47d9-9021-4a5f7f69a842" }
+        {
+          product: id,
+          device_id: Math.floor(Math.random() * 10000000000 + 1) + "",
+        }
       );
+      // d5cec0cd-566c-47d9-9021-4a5f7f69a842
 
       if (!response) {
         throw new Error("Internet bilan aloqa yo'q");
@@ -66,7 +70,7 @@ async function addToSaved(id) {
 }
 
 onMounted(() => {
-  like.value = props.item.is_liked
+  like.value = props.item.is_liked;
   console.log(props.item.is_liked);
 });
 

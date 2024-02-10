@@ -28,10 +28,12 @@ const changeLocale = (l) => {
 
 const openLoginModal = () => {
   toggleLoginModal.value = true;
+  document.body.classList.add("overflow-hidden");
 };
 
 const closeLoginModal = () => {
   toggleLoginModal.value = false;
+  document.body.classList.remove("overflow-hidden");
 };
 </script>
 

@@ -9,7 +9,11 @@ import "leaflet/dist/leaflet.css";
 const props = defineProps({
   userDetailsSignUp: Object,
 });
-const emit = defineEmits(["success:signUpDone", "update:goBack"]);
+const emit = defineEmits([
+  "close:modal",
+  "success:signUpDone",
+  "update:goBack",
+]);
 
 const map = ref();
 const marker = ref();
@@ -117,14 +121,25 @@ async function signUp() {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg p-4 h-[400px] min-h-[600px] w-[400px]">
+  <div
+    class="bg-white rounded-lg relative p-4 h-[400px] min-h-[650px] w-[400px]"
+  >
+    <div class="flex titles">
+      <div class="left">
+        <h1 class="text-2xl font-bold title">Введите адресс</h1>
+      </div>
+      <button
+        @click="emit('close:modal')"
+        class="absolute text-2xl font-bold icon-cancle right top-4 right-4"
+      ></button>
+    </div>
     <h1>Lokatsiya</h1>
-    <div class="search-bar relative">
+    <div class="relative search-bar">
       <input
         v-model="searchTerm"
         @input="debounce(async () => await searchPlaces(), 1000)"
         type="text"
-        class="outline-none border rounded px-4 py-2 w-full"
+        class="w-full px-4 py-2 border rounded outline-none"
       />
       <div
         v-show="searchPlacesResults.length"
@@ -140,9 +155,9 @@ async function signUp() {
         </button>
       </div>
     </div>
-    <div class="map z-50" id="map"></div>
-    <button @click="signUp" class="sign-up-action mt-4">Action</button>
-    <button @click="emit('update:goBack')" class="back mt-4">Back</button>
+    <div class="z-50 map" id="map"></div>
+    <button @click="signUp" class="mt-4 sign-up-action">Action</button>
+    <button @click="emit('update:goBack')" class="mt-4 back">Back</button>
   </div>
 </template>
 

@@ -7,9 +7,13 @@ import { onMounted } from "vue";
 const MapModal = defineAsyncComponent(() => import("./MapModal.vue"));
 const emit = defineEmits(["close:modal"]);
 const typeModal = ref("login");
+const toggleLoginModal = ref(false);
 
 const switchTypeModal = (type) => {
   typeModal.value = type;
+};
+const closeLoginModal = () => {
+  toggleLoginModal.value = false;
 };
 
 const userDetailsSignUp = ref({
@@ -131,17 +135,15 @@ onMounted(async () => {
       v-if="typeModal === 'login'"
       class="relative h-auto p-4 bg-white rounded-lg modal-box-user"
     >
-      <div class="flex titles">
+      <div class="flex items-center titles">
         <div class="left">
           <h1 class="text-2xl font-bold title">Добро пожаловать!</h1>
           <p class="desc">Войти в систему чтобы торговать в системе</p>
         </div>
         <button
           @click="emit('close:modal')"
-          class="absolute font-bold right tet-7xl top-4 right-4"
-        >
-          &times;
-        </button>
+          class="absolute text-2xl font-bold icon-cancle right top-4 right-4"
+        ></button>
       </div>
       <form @submit.prevent="login" class="form">
         <div class="flex flex-col items-start form-box">
@@ -179,7 +181,7 @@ onMounted(async () => {
     </div>
     <div
       v-if="typeModal === 'signup'"
-      class="h-auto p-4 bg-white rounded-lg modal-box-seller"
+      class="relative h-auto p-4 bg-white rounded-lg modal-box-seller"
     >
       <div class="flex titles">
         <div class="left">
@@ -188,10 +190,8 @@ onMounted(async () => {
         </div>
         <button
           @click="emit('close:modal')"
-          class="absolute font-bold right tet-7xl top-4 right-4"
-        >
-          &times;
-        </button>
+          class="absolute text-2xl font-bold icon-cancle right top-4 right-4"
+        ></button>
       </div>
       <form class="space-y-4 form">
         <div class="flex flex-col items-start form-box">
@@ -258,16 +258,17 @@ onMounted(async () => {
     <MapModal
       @update:go-back="switchTypeModal('signup')"
       @success:sign-up-done="switchTypeModal('success')"
+      @close:modal="closeLoginModal"
       :user-details-sign-up="userDetailsSignUp"
       v-if="typeModal === 'map'"
     />
     <div
       v-if="typeModal === 'success'"
-      class="success text-center rounded p-4 bg-white"
+      class="p-4 text-center bg-white rounded success"
     >
-      <h1 class="title text-xl font-bold">Sizning so'rovingiz jo'natildi</h1>
+      <h1 class="text-xl font-bold title">Sizning so'rovingiz jo'natildi</h1>
       <button
-        class="button bg-blue rounded text-white px-4 py-2 mt-4 font-bold"
+        class="px-4 py-2 mt-4 font-bold text-white rounded button bg-blue"
         @click="emit('close:modal')"
       >
         OK!
