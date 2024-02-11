@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-  <a class="flex items-center cursor-pointer group">
+  <a class="flex items-center cursor-pointer group shadow-3.5xl">
     <div
       class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-icon relative z-[1] border border-gray-4 group-hover:border-blue duration-300 transition-300"
     >

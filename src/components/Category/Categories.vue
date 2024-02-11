@@ -81,7 +81,12 @@ onMounted(async () => {
           class="grid pb-10 mt-10 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-5"
           v-show="loading"
         >
-          <SkeletonLoading type="category" v-for="i in 3" :key="i" v-show="loading" />
+          <SkeletonLoading
+            type="category"
+            v-for="i in 9"
+            :key="i"
+            v-show="loading"
+          />
         </div>
       </div>
     </div>
