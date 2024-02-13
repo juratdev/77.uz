@@ -5,7 +5,7 @@ import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
 </script>
 <template>
-  <footer>
+  <footer class="mt-auto">
     <div
       class="mt-8 pt-14 md:pt-16 pb-3 bg-[url('/public/images/footer/circles.svg')] bg-center bg-cover relative"
     >

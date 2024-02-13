@@ -6,6 +6,9 @@ import { defineAsyncComponent } from "vue";
 import SkeletonLoading from "../ui/SkeletonLoading.vue";
 
 const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
+// const ProductSingle = defineAsyncComponent(() =>
+//   import("../../pages/Products/ProductSingle.vue")
+// );
 
 const product = ref([]);
 const loading = ref(false);
@@ -98,7 +101,12 @@ onMounted(async () => {
       <div
         class="grid w-full grid-cols-2 gap-6 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10"
       >
-        <ProductCard v-for="(item, key) in product" :key="key" :item="item" />
+        <ProductCard
+          v-for="(item, key) in product"
+          :key="key"
+          :item="item"
+          :slug="item.slug"
+        />
       </div>
     </div>
     <div class="w-full" v-if="loading">
