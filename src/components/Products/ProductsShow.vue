@@ -10,30 +10,70 @@ const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
 const product = ref([]);
 const loading = ref(false);
 
+let deviceId = localStorage.getItem("deviceId");
+
 async function loadProducts() {
-  try {
-    loading.value = true;
-    const response = await storeInstance.get(`/list/ads/`);
+  if (deviceId) {
+    try {
+      loading.value = true;
+      const response = await storeInstance.get(`/list/ads/`, {
+        headers: {
+          device_id: localStorage.getItem("deviceId"),
+        },
+      });
 
-    if (!response) {
-      throw new Error("Internet bilan aloqa yo'q");
+      if (!response) {
+        throw new Error("Internet bilan aloqa yo'q");
+      }
+
+      if (response.status !== 200) {
+        throw new Error(response.statusText);
+      }
+
+      response.data.results.forEach(async (p) => {
+        await product.value.push(p);
+      });
+
+      return;
+    } catch (error) {
+      alert(error);
+    } finally {
+      setTimeout(() => {
+        loading.value = false;
+      }, 500);
     }
+  } else {
+    deviceId = Math.floor(Math.random() * 10000000000 + 1) + "";
+    localStorage.setItem("deviceId", JSON.stringify(deviceId));
 
-    if (response.status !== 200) {
-      throw new Error(response.statusText);
+    try {
+      loading.value = true;
+      const response = await storeInstance.get(`/list/ads/`, {
+        headers: {
+          device_id: localStorage.getItem("deviceId"),
+        },
+      });
+
+      if (!response) {
+        throw new Error("Internet bilan aloqa yo'q");
+      }
+
+      if (response.status !== 200) {
+        throw new Error(response.statusText);
+      }
+
+      response.data.results.forEach(async (p) => {
+        await product.value.push(p);
+      });
+
+      return;
+    } catch (error) {
+      alert(error);
+    } finally {
+      setTimeout(() => {
+        loading.value = false;
+      }, 500);
     }
-
-    response.data.results.forEach(async (p) => {
-      await product.value.push(p);
-    });
-
-    return;
-  } catch (error) {
-    alert(error);
-  } finally {
-    setTimeout(() => {
-      loading.value = false;
-    }, 500);
   }
 }
 

@@ -30,10 +30,9 @@ async function addToSaved(id) {
         `/favourite-product-create-by-id/`,
         {
           product: id,
-          device_id: Math.floor(Math.random() * 10000000000 + 1) + "",
+          device_id: localStorage.getItem("deviceId"),
         }
       );
-      // d5cec0cd-566c-47d9-9021-4a5f7f69a842
 
       if (!response) {
         throw new Error("Internet bilan aloqa yo'q");
@@ -50,7 +49,11 @@ async function addToSaved(id) {
     if (like.value) {
       like.value = false;
       const response = await storeInstance.delete(
-        `/favourite-product-create-by-id/${id}/delete`
+        `/favourite-product-create-by-id/${id}/delete`,
+        {
+          product: id,
+          device_id: localStorage.getItem("deviceId"),
+        }
       );
 
       if (!response) {
