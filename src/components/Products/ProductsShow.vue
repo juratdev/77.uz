@@ -16,67 +16,29 @@ const loading = ref(false);
 let deviceId = localStorage.getItem("deviceId");
 
 async function loadProducts() {
-  if (deviceId) {
-    try {
-      loading.value = true;
-      const response = await storeInstance.get(`/list/ads/`, {
-        headers: {
-          device_id: localStorage.getItem("deviceId"),
-        },
-      });
-
-      if (!response) {
-        throw new Error("Internet bilan aloqa yo'q");
-      }
-
-      if (response.status !== 200) {
-        throw new Error(response.statusText);
-      }
-
-      response.data.results.forEach(async (p) => {
-        await product.value.push(p);
-      });
-
-      return;
-    } catch (error) {
-      alert(error);
-    } finally {
-      setTimeout(() => {
-        loading.value = false;
-      }, 500);
-    }
-  } else {
+  if (!deviceId) {
     deviceId = Math.floor(Math.random() * 10000000000 + 1) + "";
-    localStorage.setItem("deviceId", JSON.stringify(deviceId));
+    localStorage.setItem("deviceId", String(deviceId));
+  }
+  try {
+    loading.value = true;
+    const response = await storeInstance.get(`/list/ads/`, {
+      headers: {
+        device_id: localStorage.getItem("deviceId"),
+      },
+    });
 
-    try {
-      loading.value = true;
-      const response = await storeInstance.get(`/list/ads/`, {
-        headers: {
-          device_id: localStorage.getItem("deviceId"),
-        },
-      });
+    response.data.results.forEach((item) => {
+      product.value.push(item);
+    });
 
-      if (!response) {
-        throw new Error("Internet bilan aloqa yo'q");
-      }
-
-      if (response.status !== 200) {
-        throw new Error(response.statusText);
-      }
-
-      response.data.results.forEach(async (p) => {
-        await product.value.push(p);
-      });
-
-      return;
-    } catch (error) {
-      alert(error);
-    } finally {
-      setTimeout(() => {
-        loading.value = false;
-      }, 500);
-    }
+    return;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
   }
 }
 

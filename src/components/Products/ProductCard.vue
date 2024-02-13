@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, onBeforeMount } from "vue";
 import { ref } from "vue";
 import { defineProps } from "vue";
 import { useTime } from "@/composables/useTime";
@@ -22,7 +22,7 @@ const props = defineProps({
 const { formattedDate, convertTime } = useTime();
 
 const like = ref(false);
-
+const device_id = ref();
 async function addToSaved(id) {
   try {
     if (!like.value) {
@@ -31,7 +31,7 @@ async function addToSaved(id) {
         `/favourite-product-create-by-id/`,
         {
           product: id,
-          device_id: localStorage.getItem("deviceId"),
+          device_id: device_id.value,
         }
       );
 
@@ -43,17 +43,15 @@ async function addToSaved(id) {
         throw new Error(response.statusText);
       }
 
-      console.log(response.data);
+      like.value = true;
       return;
-    }
-
-    if (like.value) {
-      like.value = false;
+    } else {
       const response = await storeInstance.delete(
-        `/favourite-product-create-by-id/${id}/delete`,
+        `/favourite-product-by-id/${id}/delete/`,
         {
-          product: id,
-          device_id: localStorage.getItem("deviceId"),
+          headers: {
+            "Device-id": device_id.value,
+          },
         }
       );
 
@@ -61,11 +59,11 @@ async function addToSaved(id) {
         throw new Error("Internet bilan aloqa yo'q");
       }
 
-      if (response.status !== 201) {
-        throw new Error(response.statusText);
-      }
+      // if (response.status !== 201) {
+      //   throw new Error(response.statusText);
+      // }
 
-      console.log(response.data);
+      like.value = false;
       return;
     }
   } catch (error) {
@@ -75,9 +73,9 @@ async function addToSaved(id) {
 
 onMounted(() => {
   like.value = props.item.is_liked;
-  console.log(props.item.is_liked);
+  device_id.value = localStorage.getItem("deviceId");
+  // console.log(like.value);
 });
-
 onMounted(async () => {
   await convertTime(props.item.published_at);
 });
