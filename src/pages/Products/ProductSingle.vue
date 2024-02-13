@@ -75,6 +75,10 @@ onMounted(async () => {
           </div>
         </div>
       </div>
+
+      <div>
+        <h1 class="text-xl font-bold">{{ products.name }}</h1>
+      </div>
     </div>
   </div>
 </template>
