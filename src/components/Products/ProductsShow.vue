@@ -6,9 +6,6 @@ import { defineAsyncComponent } from "vue";
 import SkeletonLoading from "../ui/SkeletonLoading.vue";
 
 const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
-// const ProductSingle = defineAsyncComponent(() =>
-//   import("../../pages/Products/ProductSingle.vue")
-// );
 
 const product = ref([]);
 const loading = ref(false);
@@ -18,13 +15,13 @@ let deviceId = localStorage.getItem("deviceId");
 async function loadProducts() {
   if (!deviceId) {
     deviceId = Math.floor(Math.random() * 10000000000 + 1) + "";
-    localStorage.setItem("deviceId", String(deviceId));
+    localStorage.setItem("deviceId", deviceId);
   }
   try {
     loading.value = true;
     const response = await storeInstance.get(`/list/ads/`, {
       headers: {
-        device_id: localStorage.getItem("deviceId"),
+        "Device-id": localStorage.getItem("deviceId"),
       },
     });
 

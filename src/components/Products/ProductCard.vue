@@ -59,10 +59,6 @@ async function addToSaved(id) {
         throw new Error("Internet bilan aloqa yo'q");
       }
 
-      // if (response.status !== 201) {
-      //   throw new Error(response.statusText);
-      // }
-
       like.value = false;
       return;
     }
@@ -74,7 +70,6 @@ async function addToSaved(id) {
 onMounted(() => {
   like.value = props.item.is_liked;
   device_id.value = localStorage.getItem("deviceId");
-  // console.log(like.value);
 });
 onMounted(async () => {
   await convertTime(props.item.published_at);
