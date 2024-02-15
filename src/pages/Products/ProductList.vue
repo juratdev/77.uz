@@ -81,9 +81,9 @@ onMounted(async () => {
             >
             <div class="relative">
               <div
-                class="bg-gray-200 rounded-lg pl-3 p-2.5 cursor-pointer flex justify-between border border-transparent"
+                class="rounded-lg pl-3 p-2.5 cursor-pointer flex items-center justify-between border border-[#EAEDF0] border-transparent"
               >
-                <div class="text-sm leading-5 truncate text-dark">
+                <div class="text-sm leading-5 truncate text-primary">
                   Выберите регион
                 </div>
                 <span
@@ -194,6 +194,62 @@ onMounted(async () => {
                   </div>
                 </div>
               </div> -->
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="" class="text-sm font-medium leading-5 text-gray"
+              >Сортировать</label
+            >
+            <div class="flex flex-col">
+              <label
+                class="transition group inline-flex items-center relative select-none min-h-[20px] cursor-pointer"
+                style="min-height: 20px"
+                ><input
+                  type="radio"
+                  class="absolute invisible w-0 h-0 opacity-0 peer"
+                  name="k-radio-591"
+                  value="price"
+                /><span
+                  class="before:w-2 before:h-2 shrink-0 duration-200 ease-in-out bg-white peer-checked:before:opacity-100 mr-2 before:opacity-0 relative border rounded-full box-border before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:transition-all before:duration-200 border-gray-3 peer-disabled:before:bg-gray-100 before:bg-blue group-hover:border-blue peer-checked:border-white/20 peer-checked:bg-blue peer-checked:before:!bg-white"
+                  style="width: 20px; height: 20px"
+                ></span
+                ><span
+                  class="w-full py-3 text-sm font-medium border-b leading-130 md:group-hover:text-blue transition-300 border-gray-4 group-last:border-b-0 text-dark"
+                  >Дешёвые сперва</span
+                ></label
+              ><label
+                class="transition group inline-flex items-center relative select-none min-h-[20px] cursor-pointer"
+                style="min-height: 20px"
+                ><input
+                  type="radio"
+                  class="absolute invisible w-0 h-0 opacity-0 peer"
+                  name="k-radio-591"
+                  value="-price"
+                /><span
+                  class="before:w-2 before:h-2 shrink-0 duration-200 ease-in-out bg-white peer-checked:before:opacity-100 mr-2 before:opacity-0 relative border rounded-full box-border before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:transition-all before:duration-200 border-gray-3 peer-disabled:before:bg-gray-100 before:bg-blue group-hover:border-blue peer-checked:border-white/20 peer-checked:bg-blue peer-checked:before:!bg-white"
+                  style="width: 20px; height: 20px"
+                ></span
+                ><span
+                  class="w-full py-3 text-sm font-medium border-b leading-130 md:group-hover:text-blue transition-300 border-gray-4 group-last:border-b-0 text-dark"
+                  >Дорогие сперва</span
+                ></label
+              ><label
+                class="transition group inline-flex items-center relative select-none min-h-[20px] cursor-pointer"
+                style="min-height: 20px"
+                ><input
+                  type="radio"
+                  class="absolute invisible w-0 h-0 opacity-0 peer"
+                  name="k-radio-591"
+                  value="published_at"
+                /><span
+                  class="before:w-2 before:h-2 shrink-0 duration-200 ease-in-out bg-white peer-checked:before:opacity-100 mr-2 before:opacity-0 relative border rounded-full box-border before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:transition-all before:duration-200 border-gray-3 peer-disabled:before:bg-gray-100 before:bg-blue group-hover:border-blue peer-checked:border-white/20 peer-checked:bg-blue peer-checked:before:!bg-white"
+                  style="width: 20px; height: 20px"
+                ></span
+                ><span
+                  class="w-full py-3 text-sm font-medium border-b leading-130 md:group-hover:text-blue transition-300 border-gray-4 group-last:border-b-0 text-dark"
+                  >Новые сперва</span
+                ></label
+              >
             </div>
           </div>
         </form>
