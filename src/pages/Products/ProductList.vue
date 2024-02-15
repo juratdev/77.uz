@@ -4,6 +4,7 @@ import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineAsyncComponent } from "vue";
 import SkeletonLoading from "../../components/ui/SkeletonLoading.vue";
+import Dropdown from "../../components/Products/Dropdown.vue";
 
 const ProductCard = defineAsyncComponent(() =>
   import("../../components/Products/ProductCard.vue")
@@ -60,6 +61,27 @@ async function loadProducts() {
 onMounted(async () => {
   await loadProducts();
 });
+
+const dataOptions1 = [
+  "Андижанская область",
+  "Бухарская область",
+  "Джизакская область",
+  "Кашкадарьинская область",
+  "Навоийская область",
+  "Наманганская область",
+  "Самаркандская область",
+  "Город Ташкент",
+];
+const dataOptions2 = [
+  "Андижанская область",
+  "Бухарская область",
+  "Джизакская область",
+  "Кашкадарьинская область",
+  "Навоийская область",
+  "Наманганская область",
+  "Самаркандская область",
+  "Город Ташкент",
+];
 </script>
 
 <template>
@@ -79,237 +101,15 @@ onMounted(async () => {
             <label for="" class="text-sm font-medium leading-5 text-gray"
               >Регион</label
             >
-            <div class="relative">
-              <div
-                class="rounded-lg pl-3 p-2.5 cursor-pointer flex items-center justify-between border border-[#EAEDF0]"
-              >
-                <div class="text-sm leading-5 truncate text-primary">
-                  Выберите регион
-                </div>
-                <span
-                  class="inline-block text-[9px] leading-6 -rotate-90 icon-down transition-300 text-gray"
-                ></span>
-              </div>
-              <!-- <div
-                class="absolute top-full w-full bg-white rounded-lg z-10 translate-y-3 overflow-x-hidden max-h-[318px] scroll-style options"
-              >
-                <div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Андижанская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Бухарская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Джизакская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Кашкадарьинская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Навоийская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Наманганская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Самаркандская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Сурхандарьинская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Сырдарьинская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Город Ташкент
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Ташкентская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Ферганская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Хорезмская область
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Республика Каракалпакстан
-                    </p>
-                  </div>
-                </div>
-              </div> -->
-            </div>
+            <Dropdown title="Выберите регион" :options="dataOptions1" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="" class="text-sm font-medium leading-5 text-gray"
               >Район/город</label
             >
-            <div class="relative">
-              <div
-                class="rounded-lg pl-3 p-2.5 cursor-pointer flex items-center justify-between border border-[#EAEDF0]"
-              >
-                <div class="text-sm leading-5 truncate text-dark">
-                  Выберите район/город
-                </div>
-                <span
-                  class="inline-block leading-6 text-[9px] -rotate-90 icon-down transition-300 text-gray"
-                ></span>
-              </div>
-              <!-- <div
-                class="absolute top-full w-full bg-white rounded-lg z-10 translate-y-3 overflow-x-hidden max-h-[318px] scroll-style options"
-              >
-                <div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Алатский район
-                    </p>
-                  </div>
-                  <div
-                    class="transition-300 p-4 hover:bg-gray-bg cursor-pointer border-b border-white-4 last:border-none !bg-gray-4"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Бухарский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Вабкентский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Каганский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Каракульский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Караулбазарский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Пешкунский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Ромитанский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Шафирканский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Жондорский район
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      город Бухара
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      город Каган
-                    </p>
-                  </div>
-                  <div
-                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
-                  >
-                    <p class="text-base font-medium text-dark leading-130">
-                      Гиждуванский район
-                    </p>
-                  </div>
-                </div>
-              </div> -->
-            </div>
+            <Dropdown title="Выберите район/город" :options="dataOptions2" />
           </div>
+
           <div class="flex flex-col gap-2">
             <label for="" class="text-sm font-medium leading-5 text-gray"
               >Сортировать</label
