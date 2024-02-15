@@ -28,13 +28,18 @@ const router = createRouter({
           name: "product-list",
           component: () => import("@/pages/Products/ProductList.vue"),
         },
+        {
+          path: "favourites",
+          name: "favourites",
+          component: () => import("@/pages/Products/ProductFavorite.vue"),
+        },
       ],
     },
 
     {
       path: "/:catchAll(.*)",
       name: "Not Found",
-      component: () => import("@/pages/NotFound.vue")
+      component: () => import("@/pages/NotFound.vue"),
     },
   ],
 });

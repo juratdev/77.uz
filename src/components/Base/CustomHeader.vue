@@ -164,13 +164,13 @@ const closeLoginModal = () => {
       </a>
 
       <div class="flex items-center gap-3 sm:gap-4">
-        <a
-          href="#"
+        <router-link
+          to="favourites"
           class="flex items-center gap-2 text-dark text-sm font-semibold leading-5 hover:text-blue transition-300 max-sm:p-1.5 max-sm:bg-gray-bg max-sm:rounded-lg"
         >
           <i class="text-lg icon-like"></i>
-          <span class="max-md:hidden">{{ t("navbar.star") }}</span></a
-        >
+          <span class="max-md:hidden">{{ t("navbar.star") }}</span>
+        </router-link>
         <span class="h-8 bg-gray-bg max-sm:hidden"></span>
         <button
           @click="openLoginModal"

@@ -6,6 +6,7 @@ import { RouterView } from "vue-router";
 
 <template>
   <div class="bg-[#F0F3F7] min-h-screen flex flex-col">
+    <!-- HEADER -->
     <CustomHeader />
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onBeforeMount } from "vue";
+import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineProps } from "vue";
 import { useTime } from "@/composables/useTime";
@@ -89,7 +89,7 @@ onMounted(async () => {
     </button>
     <router-link
       :to="'/products/' + props.item.slug"
-      class="relative flex flex-col w-full overflow-hidden bg-white border-2 border-white cursor-pointer product-card rounded-xl transition-300 group"
+      class="relative flex flex-col w-full h-full overflow-hidden bg-white border-2 border-white cursor-pointer product-card rounded-xl transition-300 group"
     >
       <div class="w-full h-64 max-sm:h-44 max-xs:h-30 rounded-t-xl">
         <img

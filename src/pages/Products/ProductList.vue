@@ -2,131 +2,262 @@
 import { storeInstance } from "@/instances";
 import { onMounted } from "vue";
 import { ref } from "vue";
+import { defineAsyncComponent } from "vue";
+import SkeletonLoading from "../../components/ui/SkeletonLoading.vue";
 
+const ProductCard = defineAsyncComponent(() =>
+  import("../../components/Products/ProductCard.vue")
+);
+
+// const like = ref(false);
 const loading = ref(false);
-const products = ref([]);
+// const products = ref([]);
 const count = ref(0);
+const product = ref([]);
 const page = ref(0);
 
-async function pushProducts(product) {
-  products.value.push(product);
-}
+// async function pushProducts(product) {
+//   products.value.push(product);
+// }
 
-async function loadProductsList() {
+let deviceId = localStorage.getItem("deviceId");
+
+async function loadProducts() {
+  if (!deviceId) {
+    deviceId = Math.floor(Math.random() * 10000000000 + 1) + "";
+    localStorage.setItem("deviceId", deviceId);
+  }
   try {
-    const response = await storeInstance.get(`/list/ads/`);
+    loading.value = true;
+    const response = await storeInstance.get(`/list/ads/`, {
+      headers: {
+        "Device-id": localStorage.getItem("deviceId"),
+      },
+    });
 
-    if (!response) {
-      throw new Error("Internet bilan aloqa yo'q");
-    }
-
-    if (response.status !== 200) {
-      throw new Error(response.statusText);
-    }
-
-    if (page.value < 0 || page.value > 3) {
-      return;
-    }
+    // response.data.results.forEach((item) => {
+    //   product.value.push(item);
+    // });
 
     page.value++;
 
     response.data.results.forEach(async (p) => {
-      await pushProducts(p);
+      product.value.push(p);
     });
 
     count.value + response.data.count;
 
-    console.log(products.value);
-
     return;
   } catch (error) {
-    alert(error);
+    console.error(error);
+  } finally {
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
   }
 }
 
 onMounted(async () => {
-  await loadProductsList();
+  await loadProducts();
 });
 </script>
 
 <template>
-  <div class="container px-2 py-6 mx-auto product-list-page sm:px-4">
+  <div class="containerMain product-list-page">
     <div class="breadcrumb">
       <p>Home page</p>
     </div>
-    <div class="flex my-4 content">
-      <aside class="p-4 bg-white rounded-lg filter-side">
-        <h1 class="text-xl font-bold title">Filter goes here</h1>
-      </aside>
-      <main class="ml-4 products-list-side">
-        <h1 class="text-3xl font-bold title">Продукты</h1>
-        <div class="search-bar">
-          <input
-            type="text"
-            class="px-4 py-2 bg-white border rounded outline-none"
-          />
-        </div>
-        <div class="text-gray-300 count">{{ count }} объявлений</div>
-        <div
-          class="grid grid-cols-2 gap-6 py-8 my-6 sm:grid-cols-2 lg:grid-cols-3 md:my-10 products"
-        >
-          <div
-            v-for="(product, key) in products"
-            :key="key"
-            class="p-4 bg-white product rounded-xl"
-          >
-            <div
-              class="relative flex flex-col w-full overflow-hidden bg-white border-2 border-white cursor-pointer product-card rounded-xl transition-300 group"
+    <div class="grid items-start grid-cols-12 gap-6 pt-5 pb-7 content">
+      <aside
+        class="col-span-4 p-4 bg-white md:rounded-xl max-md:hidden lg:col-span-3 filter-side"
+      >
+        <h2 class="mb-4 text-xl font-semibold leading-130 text-primary title">
+          Фильтр
+        </h2>
+        <form class="flex flex-col gap-5">
+          <div class="flex flex-col gap-2">
+            <label for="" class="text-sm font-medium leading-5 text-gray"
+              >Регион</label
             >
-              <div class="w-full h-64 max-sm:h-44 max-xs:h-30 rounded-t-xl">
-                <img
-                  :src="product.photo"
-                  class="object-cover w-full h-full rounded-t-lg"
-                  :alt="product.name"
-                />
+            <div class="relative">
+              <div
+                class="bg-gray-200 rounded-lg pl-3 p-2.5 cursor-pointer flex justify-between border border-transparent"
+              >
+                <div class="text-sm leading-5 truncate text-dark">
+                  Выберите регион
+                </div>
+                <span
+                  class="inline-block text-[9px] leading-6 -rotate-90 icon-down transition-300 text-gray"
+                ></span>
               </div>
-              <div>
-                <button
-                  @click="addToSaved(product.id)"
-                  class="absolute top-3 left-3"
-                >
-                  <i
-                    class="text-2xl text-white"
-                    :class="like ? 'icon-liked' : 'icon-like'"
-                  ></i>
-                </button>
-
-                <div class="p-5">
-                  <span
-                    class="rounded-md text-[#63676C] px-2 py-1 bg-[#EAEDF0]"
-                    >{{ product.address.district.region.name }}</span
+              <!-- <div
+                class="absolute top-full w-full bg-white rounded-lg z-10 translate-y-3 overflow-x-hidden max-h-[318px] scroll-style options"
+              >
+                <div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
                   >
-                  <h1
-                    class="mt-5 mb-2 text-lg font-semibold text-black duration-300 md:text-lg leading-130 line-clamp-2 group-hover:text-blue transition-300"
+                    <p class="text-base font-medium text-dark leading-130">
+                      Андижанская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
                   >
-                    {{ product.name }}
-                  </h1>
-                  <p
-                    class="font-normal text-xs text-[#8E9297] md:text-sm text-gray-1 leading-130"
+                    <p class="text-base font-medium text-dark leading-130">
+                      Бухарская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
                   >
-                    Вчера, 19:20
-                  </p>
-                  <p class="text-[#8E9297] text-base font-semibold mt-2 mb-4">
-                    +998 71 200 70 07
-                  </p>
-                  <div class="flex gap-2 products-center">
-                    <h4
-                      class="text-base font-bold text-black md:text-2xl leading-130"
-                    >
-                      {{ product.price }}
-                    </h4>
-                    <span
-                      class="text-xs font-medium leading-5 uppercase text-blue md:leading-6 md:text-base"
-                      >sum</span
-                    >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Джизакская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Кашкадарьинская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Навоийская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Наманганская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Самаркандская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Сурхандарьинская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Сырдарьинская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Город Ташкент
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Ташкентская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Ферганская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Хорезмская область
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+                  >
+                    <p class="text-base font-medium text-dark leading-130">
+                      Республика Каракалпакстан
+                    </p>
                   </div>
                 </div>
+              </div> -->
+            </div>
+          </div>
+        </form>
+      </aside>
+      <main class="col-span-12 md:col-span-8 lg:col-span-9 products-list-side">
+        <div>
+          <div class="flex items-center justify-between gap-4">
+            <div class="w-full">
+              <h1
+                class="mb-3 text-2xl md:text-3.5xl leading-130 font-bold text-primary gap-2 title"
+              >
+                Продукты
+              </h1>
+              <div class="flex items-center w-full gap-4 mt-14">
+                <div class="w-full top-[-2rem] relative max-sm:w-full">
+                  <i
+                    class="icon-search absolute left-3 top-5 text-[1.2rem] text-[#D5D8DB]"
+                  ></i>
+                  <input
+                    type="search"
+                    id="search"
+                    class="border-2 rounded-[8px] outline-none w-full px-[2.5rem] py-[1rem]"
+                    :placeholder="$t('search.placeholder')"
+                    autocomplete="off"
+                    ref="searchModel"
+                  />
+                </div>
+                <div class="flex items-center gap-3 -mt-14">
+                  <!-- <button
+                    class="w-8 h-8 text-2xl leading-6 bg-white rounded-lg flex-center icon-filter md:hidden"
+                  ></button> -->
+                  <button
+                    class="text-3xl leading-7 hover:text-blue/90 t icon-list transition-300"
+                  ></button
+                  ><button
+                    class="!text-blue icon-grid text-3xl leading-7 transition-300"
+                  ></button>
+                </div>
               </div>
+              <p
+                class="-mt-5 text-lg font-medium text-gray-300 leading-130 count"
+              >
+                {{ count }} объявлений
+              </p>
+            </div>
+          </div>
+
+          <div v-if="!loading">
+            <div
+              class="grid grid-cols-2 gap-6 pt-6 pb-8 mt-2 mb-6 sm:grid-cols-2 lg:grid-cols-3 md:mb-5 md:mt-0 products"
+            >
+              <ProductCard
+                v-for="(item, key) in product"
+                :key="key"
+                :item="item"
+                :slug="item.slug"
+              />
+            </div>
+          </div>
+          <div class="w-full" v-if="loading">
+            <div
+              class="grid grid-cols-2 gap-6 py-8 my-6 sm:grid-cols-2 lg:grid-cols-3 md:my-10 products"
+            >
+              <SkeletonLoading v-for="i in 6" :key="i" type="product" />
             </div>
           </div>
         </div>
