@@ -24,7 +24,7 @@ const handleOpen = () => (open.value = !open.value);
     </div>
     <div
       v-if="open"
-      class="absolute shadow-lg top-full w-full bg-white rounded-lg z-10 translate-y-3 overflow-x-hidden max-h-[318px] scroll-style options"
+      class="absolute shadow-3.6xl top-full w-full bg-white rounded-lg z-10 translate-y-3 overflow-x-hidden max-h-[318px] scroll-style options"
     >
       <div>
         <div
