@@ -5,7 +5,7 @@ import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="bg-[#F0F3F7] min-h-screen flex flex-col">
+  <div class="flex flex-col min-h-screen bg-primaryBg">
     <!-- HEADER -->
     <CustomHeader />
     <router-view v-slot="{ Component }">
