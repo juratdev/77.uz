@@ -7,13 +7,9 @@ import { onMounted } from "vue";
 const MapModal = defineAsyncComponent(() => import("./MapModal.vue"));
 const emit = defineEmits(["close:modal"]);
 const typeModal = ref("login");
-const toggleLoginModal = ref(false);
 
 const switchTypeModal = (type) => {
   typeModal.value = type;
-};
-const closeLoginModal = () => {
-  toggleLoginModal.value = false;
 };
 
 const userDetailsSignUp = ref({
@@ -129,49 +125,83 @@ onMounted(async () => {
 <template>
   <div
     @click.self="emit('close:modal')"
-    class="fixed inset-0 flex items-center justify-center w-full h-screen bg-black bg-opacity-50 login-modal-component"
+    class="fixed inset-0 flex items-center justify-center w-full h-screen bg-black/50 z-[100] top-0 left-0 transition-all duration-300 p-3 login-modal-component"
   >
     <div
       v-if="typeModal === 'login'"
-      class="relative h-auto p-4 bg-white rounded-lg modal-box-user"
+      class="overflow-x-hidden scroll-style p-5 bg-white w-full lg:max-w-sm shadow-xl relative max-h-[85vh] overflow-y-auto rounded-2xl modal-box-user"
     >
-      <div class="flex items-center titles">
+      <div class="flex items-center justify-between titles">
         <div class="left">
-          <h1 class="text-2xl font-bold title">Добро пожаловать!</h1>
-          <p class="desc">Войти в систему чтобы торговать в системе</p>
+          <h1 class="mb-2 text-2xl font-bold leading-130 text-dark title">
+            Добро пожаловать!
+          </h1>
+          <p class="text-sm font-medium text-secondary leading-130 mb-7 desc">
+            Войти в систему чтобы торговать в системе
+          </p>
         </div>
         <button
           @click="emit('close:modal')"
-          class="absolute text-2xl font-bold icon-cancle right top-4 right-4"
+          class="absolute text-3xl font-semibold transition duration-300 rounded-full text-black/80 icon-cancle top-5 right-4 w-7 h-7 shrink-0 flex-center hover:text-black hover:bg-transparent active:scale-95"
         ></button>
       </div>
       <form @submit.prevent="login" class="form">
-        <div class="flex flex-col items-start form-box">
-          <label for="login">Логин</label>
+        <div class="flex flex-col items-start gap-2 form-box">
+          <label for="login" class="text-sm font-medium leading-5 text-gray-1"
+            >Логин</label
+          >
           <input
             v-model="userDetailsLogin.phone_number"
             type="text"
             name="login"
             id="login"
-            class="w-full px-4 py-2 border rounded outline-none"
+            maxlength="99"
+            placeholder="Введите логин"
+            class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none sm:text-sm text-dark disabled:text-gray bg-gray-2 focus-within:border-blue"
           />
         </div>
-        <div class="flex flex-col items-start form-box">
-          <label for="password">Пароль</label>
+        <div
+          class="relative flex flex-col items-start gap-2 mt-4 mb-2 form-box"
+        >
+          <label
+            for="password"
+            class="text-sm font-medium leading-5 text-gray-1"
+            >Пароль</label
+          >
           <input
             v-model="userDetailsLogin.password"
             type="password"
             name="password"
             id="password"
-            class="w-full px-4 py-2 border rounded outline-none"
+            placeholder="Введите пароль"
+            class="w-full py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none focus-within:border-blue ps-4 pe-10 sm:text-sm text-dark disabled:text-gray bg-gray-2"
           />
+          <i
+            class="absolute z-50 text-xl leading-6 transition duration-300 cursor-pointer hover:text-dark right-4 top-10 icon-eye-closed text-gray-1"
+          ></i>
         </div>
-        <div class="buttons">
-          <button class="submit" type="submit">Войти</button>
-          <p>Хотите стать продавцом?</p>
+        <button
+          class="text-xs leading-130 text-blue hover:text-blue/95 transition-300"
+        >
+          Забыли пароль?
+        </button>
+        <div class="flex flex-col gap-3 mt-16 buttons">
           <button
+            class="bg-blue text-white hover:bg-blue-1 px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg transition-300 active:scale-95 disabled:text-gray-2 w-full submit"
+            type="submit"
+          >
+            Войти
+          </button>
+          <div class="flex items-center gap-2">
+            <hr class="w-full h-px border-none bg-secondaryGray" />
+            <span class="text-xs whitespace-nowrap text-gray-1 leading-130"
+              >Хотите стать продавцом?</span
+            >
+            <hr class="w-full h-px border-none bg-secondaryGray" />
+          </div>
+          <button
+            class="border border-blue text-blue hover:bg-blue/10 px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg relative transition-300 active:scale-95 disabled:text-gray-2 w-full switcher"
             @click="switchTypeModal('signup')"
-            class="switcher"
             type="button"
           >
             Подать заявку
@@ -181,24 +211,31 @@ onMounted(async () => {
     </div>
     <div
       v-if="typeModal === 'signup'"
-      class="relative h-auto p-4 bg-white rounded-lg modal-box-seller"
+      class="relative overflow-x-hidden scroll-style p-5 bg-white w-full lg:max-w-sm shadow-xl max-h-[85vh] overflow-y-auto rounded-2xl modal-box-seller"
     >
       <div class="flex titles">
         <div class="left">
-          <h1 class="text-2xl font-bold title">Подать заявку</h1>
-          <p class="desc">Войти в систему чтобы торговать в системе</p>
+          <h1 class="mb-2 text-2xl font-bold leading-130 text-dark title">
+            Подать заявку
+          </h1>
+          <p class="text-sm font-medium text-secondary leading-130 mb-7 desc">
+            Войти в систему чтобы торговать в системе
+          </p>
         </div>
         <button
           @click="emit('close:modal')"
-          class="absolute text-2xl font-bold icon-cancle right top-4 right-4"
+          class="absolute text-3xl font-semibold transition duration-300 rounded-full text-black/80 icon-cancle top-5 right-4 w-7 h-7 shrink-0 flex-center hover:text-black active:scale-95"
         ></button>
       </div>
-      <form class="space-y-4 form">
-        <div class="flex flex-col items-start form-box">
-          <label for="fio">Ф.И.О.</label>
+      <form class="form">
+        <div class="flex flex-col items-start gap-2 form-box">
+          <label for="fio" class="text-sm font-medium leading-5 text-gray-1"
+            >Ф.И.О.</label
+          >
           <input
             v-model.trim="userDetailsSignUp.full_name"
-            class="w-full px-4 py-2 border rounded outline-none"
+            class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none sm:text-sm text-dark disabled:text-gray bg-gray-2 focus-within:border-blue"
+            placeholder="Введите вашу Ф.И.О."
             type="text"
             name="fio"
             id="fio"
@@ -209,7 +246,7 @@ onMounted(async () => {
           <input
             v-model.trim="userDetailsSignUp.project_name"
             type="text"
-            class="w-full px-4 py-2 border rounded outline-none"
+            class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none focus-within:border-blue ps-4 pe-10 sm:text-sm text-dark disabled:text-gray bg-gray-2"
             name="product-name"
             id="product-name"
           />
@@ -258,7 +295,7 @@ onMounted(async () => {
     <MapModal
       @update:go-back="switchTypeModal('signup')"
       @success:sign-up-done="switchTypeModal('success')"
-      @close:modal="closeLoginModal"
+      @close:modal="emit('close:modal')"
       :user-details-sign-up="userDetailsSignUp"
       v-if="typeModal === 'map'"
     />

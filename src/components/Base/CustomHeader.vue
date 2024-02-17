@@ -143,7 +143,7 @@ const closeLoginModal = () => {
           class="flex items-center gap-1 group max-lg:hidden"
         >
           <i
-            class="text-xl leading-5 icon-phone text-gray-2 group-hover:text-blue transition-300"
+            class="text-xl leading-5 icon-phone group-hover:text-blue transition-300"
           >
           </i>
           <span

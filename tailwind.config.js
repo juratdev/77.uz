@@ -4,11 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#16191D",
         primaryBg: "#F0F3F7",
         secondary: "#8E9297",
         secondaryGray: "#EAEDF0",
+        dark: "#16191D",
         blue: "#388FF3",
+        "gray-1": "#63676c",
+        "gray-2": "#f0f3f7",
       },
       boxShadow: {
         "3xl": "0 12px 36px #0e11161a",
