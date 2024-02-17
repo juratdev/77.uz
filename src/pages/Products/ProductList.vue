@@ -36,10 +36,6 @@ async function loadProducts() {
       },
     });
 
-    // response.data.results.forEach((item) => {
-    //   product.value.push(item);
-    // });
-
     page.value++;
 
     response.data.results.forEach(async (p) => {

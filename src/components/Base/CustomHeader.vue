@@ -152,8 +152,8 @@ const closeLoginModal = () => {
           >
         </a>
       </div>
-      <a
-        href="/"
+      <router-link
+        to="/"
         class="absolute top-0 left-[50%] -translate-x-1/2 bg-white border border-t-0 border-gray-4 rounded-b-[20px] p-3 md:px-4 md:py-3 shadow-3xl"
       >
         <img
@@ -161,7 +161,7 @@ const closeLoginModal = () => {
           src="../../assets/images/logo.svg"
           alt="logo"
         />
-      </a>
+      </router-link>
 
       <div class="flex items-center gap-3 sm:gap-4">
         <router-link

@@ -9,16 +9,16 @@ const { t, locale } = useI18n();
     <div
       class="mt-8 pt-14 md:pt-16 pb-3 bg-[url('/public/images/footer/circles.svg')] bg-center bg-cover relative"
     >
-      <a
+      <router-link
+        to="/"
         aria-current="page"
-        href="/"
         class="absolute top-0 left-[50%] -translate-x-2/4 -translate-y-[45%]"
         ><img
           class="h-16 absolute-center !top-0 rounded-[10px]"
           src="../../assets/images/logo.svg"
           alt="77.uz Logo"
           style="box-shadow: 0 8px 32px 0 rgba(56, 143, 243, 0.44)"
-      /></a>
+      /></router-link>
       <div class="containerMain">
         <p
           class="mb-8 text-base not-italic font-normal leading-6 text-center footer_about font-inter md:mx-44"
@@ -82,6 +82,7 @@ const { t, locale } = useI18n();
         <a
           href="https://uic.group/"
           class="flex items-center justify-between gap-2 transition duration-300 hover:scale-110"
+          target="_blank"
         >
           <img src="../../assets/images/footer/uiclogo.svg" alt="uiclogo" />
           <img src="../../assets/images/footer/uictext.svg" alt="uictext" />
