@@ -241,18 +241,27 @@ onMounted(async () => {
             id="fio"
           />
         </div>
-        <div class="form-box">
-          <label for="product-name">Название продукта</label>
+        <div class="flex flex-col gap-2 mt-4 mb-2 form-box">
+          <label
+            for="product-name"
+            class="text-sm font-medium leading-5 text-gray-1"
+            >Название продукта</label
+          >
           <input
             v-model.trim="userDetailsSignUp.project_name"
             type="text"
-            class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none focus-within:border-blue ps-4 pe-10 sm:text-sm text-dark disabled:text-gray bg-gray-2"
+            class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none focus-within:border-blue ps-4 pe-10 sm:text-sm text-dark bg-gray-2"
+            placeholder="Введите название продукта"
             name="product-name"
             id="product-name"
           />
         </div>
-        <div class="form-box">
-          <label for="product-category">Категория</label>
+        <div class="flex flex-col gap-2 mt-4 mb-2 form-box">
+          <label
+            for="product-category"
+            class="text-sm font-medium leading-5 text-gray-1"
+            >Категория</label
+          >
           <select
             v-model.trim="userDetailsSignUp.category"
             class="w-full px-4 py-2 border rounded outline-none"
