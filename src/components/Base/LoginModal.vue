@@ -24,6 +24,17 @@ const userDetailsSignUp = ref({
   },
 });
 
+const formatPhoneNumber = (event) => {
+  const x = event.target.value
+    .replace(/\D/g, "")
+    .match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+  userDetailsSignUp.phone_number.value =
+    (x[1] ? "(" + x[1] : "") +
+    (x[2] ? ") " + x[2] : "") +
+    (x[3] ? " " + x[3] : "") +
+    (x[4] ? " " + x[4] : "");
+};
+
 const userDetailsLogin = ref({ phone_number: "", password: "" });
 
 const categories = ref([]);
@@ -264,36 +275,88 @@ onMounted(async () => {
           >
           <select
             v-model.trim="userDetailsSignUp.category"
-            class="w-full px-4 py-2 border rounded outline-none"
+            class="flex justify-between w-full px-4 py-3 pl-3 border rounded-lg outline-none cursor-pointer bg-gray-2"
             name="product-category"
             id="product-category"
           >
             <option
               v-for="category in categories"
               :key="category.id"
-              class="w-full px-4 py-2 border rounded outline-none"
+              class="w-full px-4 py-2 overflow-x-hidden border rounded outline-none scroll-style"
               :value="category.id"
             >
               {{ category.name }}
             </option>
           </select>
+          <!-- <div class="relative" id="category">
+            <select
+              v-model.trim="userDetailsSignUp.category"
+              name="product-category"
+              id="product-category"
+              class="bg-gray-1 rounded-lg pl-3 p-2.5 cursor-pointer flex justify-between border"
+            >
+              <div class="text-sm leading-5 truncate text-dark">
+                Выберите категорию
+              </div>
+              <span
+                class="icon-chevron transition-300 inline-block text-gray text-2xl leading-6 !rotate-90"
+              ></span>
+            </select>
+            <div
+              class="absolute top-full w-full bg-white rounded-lg z-10 translate-y-3 overflow-x-hidden max-h-[318px] scroll-style options"
+            >
+              <option
+                v-for="category in categories"
+                :key="category.id"
+                :value="category.id"
+                class="p-4 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
+              >
+                <p class="text-base font-medium text-dark leading-130">
+                  {{ category.name }}
+                </p>
+              </option>
+            </div>
+          </div> -->
         </div>
-        <div class="form-box">
-          <label for="phone">Телефон номер</label>
-          <input
-            v-model="userDetailsSignUp.phone_number"
-            class="w-full px-4 py-2 border rounded outline-none"
-            type="text"
-            name="phone"
-            id="phone"
-          />
+        <div class="flex flex-col gap-2 mt-4 mb-2 form-box">
+          <label for="phone" class="text-sm font-medium leading-5 text-gray-1"
+            >Телефон номер</label
+          >
+          <div class="relative">
+            <span
+              class="absolute left-2 inline-block mr-1 text-lg font-normal leading-5 top-[13px] text-dark md:text-sm"
+            >
+              +998
+            </span>
+            <input
+              v-model="userDetailsSignUp.phone_number"
+              @input="formatPhoneNumber"
+              class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none ps-10 focus-within:border-blue pe-10 sm:text-sm text-dark bg-gray-2"
+              placeholder="(__) ___-__-__"
+              type="text"
+              name="phone"
+              id="phone"
+            />
+          </div>
         </div>
-        <div class="buttons">
-          <button type="button" @click="openMap">Prodoljit</button>
-          <p>Если вы продавец, войдите на платформу</p>
+        <div class="flex flex-col gap-3 mt-16 buttons">
+          <button
+            type="button"
+            @click="openMap"
+            class="bg-blue text-white hover:bg-blue-1 px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg transition-300 active:scale-95 disabled:text-gray-2 w-full"
+          >
+            Продолжить
+          </button>
+          <div class="flex items-center gap-2">
+            <hr class="w-full h-px border-none bg-secondaryGray" />
+            <span class="text-xs whitespace-nowrap text-gray-1 leading-130"
+              >Хотите стать продавцом?</span
+            >
+            <hr class="w-full h-px border-none bg-secondaryGray" />
+          </div>
           <button
             @click="switchTypeModal('login')"
-            class="switcher"
+            class="border border-blue text-blue hover:bg-blue/10 px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg relative transition-300 active:scale-95 disabled:text-gray-2 w-full switcher"
             type="button"
           >
             Войти
