@@ -4,14 +4,22 @@ import { onMounted } from "vue";
 import { ref } from "vue";
 import CategoriesItem from "./CategoriesItem.vue";
 import SkeletonLoading from "@/components/ui/SkeletonLoading.vue";
+import { useI18n } from "vue-i18n";
 
+const { t, locale } = useI18n();
+
+const currentLocale = ref(localStorage.getItem("locale"));
 const categories = ref([]);
 const loading = ref(false);
 
 async function loadCategory() {
   try {
     loading.value = true;
-    const response = await storeInstance.get(`/category/`);
+    const response = await storeInstance.get(`/category/`, {
+      headers: {
+        "Accept-Language": currentLocale.value,
+      },
+    });
 
     if (!response) {
       throw new Error("Internet bilan aloqa yo'q");

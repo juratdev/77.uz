@@ -108,9 +108,7 @@ onMounted(async () => {
           >
             {{ props.item.name }}
           </h1>
-          <p
-            class="font-normal text-xs text-[#8E9297] md:text-sm text-gray-1 leading-130"
-          >
+          <p class="text-xs font-normal md:text-sm text-gray-1 leading-130">
             {{ formattedDate }}
           </p>
           <p class="text-[#8E9297] text-base font-semibold mt-2 mb-4">
