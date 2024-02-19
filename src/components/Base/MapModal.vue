@@ -122,10 +122,14 @@ async function signUp() {
 
 <template>
   <div
-    class="bg-white rounded-lg relative p-4 h-[400px] min-h-[650px] w-[400px]"
+    class="relative overflow-x-hidden scroll-style p-4 bg-white w-full lg:max-w-sm shadow-xl overflow-y-auto rounded-2xl map-box h-[400px] min-h-[650px]"
   >
     <div class="flex titles">
-      <div class="left">
+      <div class="flex items-center gap-3 left">
+        <button
+          @click="emit('update:goBack')"
+          class="text-[10px] rotate-90 icon-down back"
+        ></button>
         <h1 class="text-2xl font-bold title">Введите адресс</h1>
       </div>
       <button
@@ -133,13 +137,16 @@ async function signUp() {
         class="absolute text-2xl font-bold icon-cancle right top-4 right-4"
       ></button>
     </div>
-    <h1>Lokatsiya</h1>
+    <h1 class="pb-3 mt-5 text-base font-medium leading-5 text-gray-1">
+      Lokatsiya
+    </h1>
     <div class="relative search-bar">
       <input
         v-model="searchTerm"
         @input="debounce(async () => await searchPlaces(), 1000)"
         type="text"
-        class="w-full px-4 py-2 border rounded outline-none"
+        placeholder="Введите адрес"
+        class="w-full px-4 py-3 mb-4 text-base leading-5 transition duration-300 border rounded-lg outline-none focus-within:border-blue ps-4 pe-10 sm:text-sm text-dark bg-gray-2"
       />
       <div
         v-show="searchPlacesResults.length"
@@ -156,14 +163,18 @@ async function signUp() {
       </div>
     </div>
     <div class="z-50 map" id="map"></div>
-    <button @click="signUp" class="mt-4 sign-up-action">Action</button>
-    <button @click="emit('update:goBack')" class="mt-4 back">Back</button>
+    <button
+      @click="signUp"
+      class="mt-4 bg-blue text-white hover:bg-blue-1 px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg transition-300 active:scale-95 disabled:text-gray-2 w-full sign-up-action"
+    >
+      Подать заявку
+    </button>
   </div>
 </template>
 
 <style scoped>
 .map {
   width: 100%;
-  height: 80%;
+  height: 65%;
 }
 </style>
