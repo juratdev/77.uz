@@ -1,14 +1,14 @@
 <script setup>
 import { storeInstance } from "@/instances";
 import { onMounted } from "vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import CategoriesItem from "./CategoriesItem.vue";
 import SkeletonLoading from "@/components/ui/SkeletonLoading.vue";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
 
-const currentLocale = ref(localStorage.getItem("locale"));
+const currentLocale = ref(locale);
 const categories = ref([]);
 const loading = ref(false);
 
@@ -46,6 +46,16 @@ async function loadCategory() {
 onMounted(async () => {
   await loadCategory();
 });
+
+// watch(
+//   currentLocale,
+//   async (newValue, oldValue) => {
+//     if (newValue !== oldValue) {
+//       await loadCategory();
+//     }
+//   },
+//   { deep: true }
+// );
 </script>
 
 <template>
