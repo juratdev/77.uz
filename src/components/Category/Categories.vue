@@ -1,14 +1,12 @@
 <script setup>
 import { storeInstance } from "@/instances";
-import { onMounted } from "vue";
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import CategoriesItem from "./CategoriesItem.vue";
 import SkeletonLoading from "@/components/ui/SkeletonLoading.vue";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
 
-const currentLocale = ref(locale);
 const categories = ref([]);
 const loading = ref(false);
 
@@ -17,7 +15,7 @@ async function loadCategory() {
     loading.value = true;
     const response = await storeInstance.get(`/category/`, {
       headers: {
-        "Accept-Language": currentLocale.value,
+        "Accept-Language": locale.value,
       },
     });
 
@@ -29,9 +27,11 @@ async function loadCategory() {
       throw new Error(response.statusText);
     }
 
-    response.data.forEach(async (p) => {
-      categories.value.push(p);
-    });
+    // response.data.forEach(async (p) => {
+    //   categories.value.push(p);
+    // });
+
+    categories.value = response.data;
 
     return;
   } catch (error) {
@@ -47,15 +47,15 @@ onMounted(async () => {
   await loadCategory();
 });
 
-// watch(
-//   currentLocale,
-//   async (newValue, oldValue) => {
-//     if (newValue !== oldValue) {
-//       await loadCategory();
-//     }
-//   },
-//   { deep: true }
-// );
+watch(
+  locale,
+  async (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      await loadCategory();
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <template>
