@@ -1,5 +1,9 @@
 <script setup>
 import { defineProps } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
 defineProps({
   item: {
     id: String,
@@ -28,7 +32,7 @@ defineProps({
           {{ item.name }}
         </h2>
         <p class="text-sm font-normal text-gray-1 leading-130">
-          {{ item.product_count }} объявлений
+          {{ item.product_count }} {{ t("categories.counter") }}
         </p>
       </div>
       <i

@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 let thisYear = new Date().getFullYear();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 </script>
 <template>
   <footer class="mt-auto">
@@ -21,13 +21,6 @@ const { t, locale } = useI18n();
           style="box-shadow: 0 8px 32px 0 rgba(56, 143, 243, 0.44)"
       /></router-link>
       <div class="containerMain">
-        <p
-          class="mb-8 text-base not-italic font-normal leading-6 text-center footer_about font-inter md:mx-44"
-        >
-          77.uz marketplace - это виртуальная платформа в Узбекистане, которая
-          облегчает<br />
-          покупки и продажи, связывая продавцов с потенциальными клиентами.
-        </p>
         <div
           class="flex justify-center items-center gap-y-4 gap-x-4 sm:gap-x-6 md:gap-x-[72px] mt-6 flex-wrap"
         >
@@ -36,13 +29,13 @@ const { t, locale } = useI18n();
             target="_blank"
             class="flex items-center gap-1 text-sm font-semibold duration-300 md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
             ><img src="../../assets/images/footer/symbol.svg" alt="Symbol" />
-            Доска объявлений</a
+            {{ t("footer.buttons.firstButton") }}</a
           ><a
             href="#"
             target="_blank"
             class="flex items-center gap-1 text-sm font-semibold duration-300 md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
             ><img src="../../assets/images/footer/symbol.svg" alt="Symbol" />
-            Условия пользования</a
+            {{ t("footer.buttons.secondButton") }}</a
           ><a
             href="tel: +998885005000"
             target="_blank"
@@ -66,9 +59,7 @@ const { t, locale } = useI18n();
         <p
           class="text-base not-italic font-normal leading-6 text-center text-black"
         >
-          Загрузите наше
-          <span class="font-bold text-blue-500">приложение</span> и пользуйтесь
-          с платформой <span class="font-bold text-blue-500">ещё удобнее</span>
+          {{ t("footer.title") }}
         </p>
       </div>
     </div>
@@ -78,7 +69,7 @@ const { t, locale } = useI18n();
         <div class="flex items-center gap-2 max-sm:block">
           <span class="font-medium text-black">© 77.uz</span>
           <span class="font-normal text-black">
-            {{ thisYear }}. Все права защищены</span
+            {{ thisYear }}. {{ t("footer.minTitle") }}</span
           >
         </div>
 

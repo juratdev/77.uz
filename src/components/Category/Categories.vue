@@ -69,22 +69,22 @@ watch(
           type="search"
           id="search"
           class="border-2 focus-within:border-blue transition duration-300 rounded-[8px] outline-none w-full px-[2.5rem] py-[1rem]"
-          :placeholder="$t('search.placeholder')"
+          :placeholder="t('search.placeholder')"
           autocomplete="off"
           ref="searchModel"
         />
         <button
           class="py-[10px] px-[22px] rounded-[5px] top-[12%] absolute right-[.5rem] bg-[#16191D] text-white z-[2] hover:bg-white hover:text-black border-2 border-transparent hover:border-black transition duration-300"
         >
-          {{ $t("search.text") }}
+          {{ t("search.text") }}
         </button>
       </div>
       <div class="text-center category__title">
         <h1 class="text-[2rem] font-[700] mb-[.5rem]">
-          {{ $t("categories.title") }}
+          {{ t("categories.title") }}
         </h1>
         <p class="text-[#8E9297]">
-          {{ $t("categories.minTitle") }}
+          {{ t("categories.minTitle") }}
         </p>
       </div>
 

@@ -1,11 +1,14 @@
 <script setup>
 import { storeInstance } from "@/instances";
-import { onMounted } from "vue";
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { defineAsyncComponent } from "vue";
 import SkeletonLoading from "../ui/SkeletonLoading.vue";
 
 const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
+
 const number = ref("");
 const product = ref(null);
 const loading = ref(false);
@@ -22,6 +25,7 @@ async function loadProducts() {
     const response = await storeInstance.get(`/list/ads/`, {
       headers: {
         "Device-id": localStorage.getItem("deviceId"),
+        "Accept-Language": locale.value,
       },
     });
     // response.data.results.forEach((item) => {
@@ -56,6 +60,16 @@ onMounted(async () => {
   await loadProducts();
   // await number();
 });
+
+watch(
+  locale,
+  async (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      await loadProducts();
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -64,10 +78,10 @@ onMounted(async () => {
   >
     <div class="text-center products__title">
       <h1 class="text-[2rem] font-[700] mb-[.5rem]">
-        {{ $t("products.title") }}
+        {{ t("products.title") }}
       </h1>
       <p class="text-[#8E9297]">
-        {{ $t("products.minTitle") }}
+        {{ t("products.minTitle") }}
       </p>
     </div>
     <div v-if="!loading">
@@ -95,7 +109,7 @@ onMounted(async () => {
       to="/products/list"
       class="flex items-center gap-3 border-[2px] border-[#D6D6D6]/50 bg-gray-4 hover:bg-gray-200 transition-300 duration-300 rounded-full py-3 px-7 text-base font-semibold leading-130 text-black"
     >
-      {{ $t("products.buttonMore") }}
+      {{ t("products.buttonMore") }}
       <i class="text-base leading-5 text-black -rotate-90 icon-doubleDown"></i>
     </RouterLink>
   </div>

@@ -9,7 +9,8 @@
       "minTitle": "Sizga kerak bo'lgan barcha toifalarni xaridordan topishingiz mumkin",
       "types": {
         "menClothes": "Erkaklar kiyimi"
-      }
+      },
+      "counter": "reklamalar"
     },
     "search": {
       "text": "Izlash",
@@ -19,6 +20,14 @@
       "title": "E'lonlar",
       "minTitle": "Sizga kerak bo'lgan barcha toifalarni xaridordan topishingiz mumkin",
       "buttonMore": "Ko'proq ko'rsatish"
+    },
+    "footer": {
+      "buttons": {
+        "firstButton": "E'lonlar doskasi",
+        "secondButton": "Foydalanish shartlari"
+      },
+      "title": "Biznikini yuklab oling va platformadan yanada qulayroq foydalaning",
+      "minTitle": "Barcha huquqlar himoyalangan"
     }
   },
   "ru": {
@@ -31,7 +40,8 @@
       "minTitle": "Вы можете найти все категории, которые вам нужны от покупателя",
       "types": {
         "menClothes": "Мужская одежда"
-      }
+      },
+      "counter": "объявлений"
     },
     "search": {
       "text": "Поиск",
@@ -41,6 +51,14 @@
       "title": "Объявления",
       "minTitle": "Вы можете найти все категории, которые вам нужны от покупателя",
       "buttonMore": "Показать больше"
+    },
+    "footer": {
+      "buttons": {
+        "firstButton": "Доска объявлений",
+        "secondButton": "Условия пользования"
+      },
+      "title": "Загрузите наше Загрузите наше и пользуйтесь с платформой ещё удобнее",
+      "minTitle": "Все права защищены"
     }
   }
 }

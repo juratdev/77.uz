@@ -2,8 +2,8 @@
 import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineProps } from "vue";
-// import { useTime } from "@/composables/useTime";
 import { storeInstance } from "@/instances";
+
 const props = defineProps({
   item: {
     id: Number,
