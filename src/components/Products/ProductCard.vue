@@ -2,14 +2,13 @@
 import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineProps } from "vue";
-import { useTime } from "@/composables/useTime";
+// import { useTime } from "@/composables/useTime";
 import { storeInstance } from "@/instances";
 const props = defineProps({
   item: {
     id: Number,
     name: String,
     phone: Number,
-    date: String,
     price: Number,
     photo: String,
     seller: {
@@ -24,8 +23,6 @@ const props = defineProps({
   },
 });
 
-const { formattedDate, convertTime } = useTime();
-
 function formatMoneyDecimal(number, fix = 0) {
   const option2 = {
     maximumFractionDigits: fix,
@@ -36,6 +33,21 @@ function formatMoneyDecimal(number, fix = 0) {
     ? new Intl.NumberFormat("ru-RU", option2).format(number)
     : "0.00";
 }
+
+const formattedDate = ref("");
+
+const formatDate = (published_at) => {
+  const options = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  formattedDate.value = new Intl.DateTimeFormat("uz-UZ", options).format(
+    new Date(published_at)
+  );
+};
 
 const like = ref(false);
 const device_id = ref();
@@ -86,10 +98,11 @@ async function addToSaved(id) {
 onMounted(() => {
   like.value = props.item.is_liked;
   device_id.value = localStorage.getItem("deviceId");
+  formatDate(props.item.published_at);
 });
-onMounted(async () => {
-  await convertTime(props.item.published_at);
-});
+// onMounted(async () => {
+//   await convertTime(props.item.published_at);
+// });
 </script>
 
 <template>
@@ -105,7 +118,7 @@ onMounted(async () => {
     </button>
     <router-link
       :to="'/products/' + props.item.slug"
-      class="relative flex flex-col w-full h-full overflow-hidden bg-white border-2 border-white cursor-pointer product-card rounded-xl transition-300 group"
+      class="flex flex-col w-full h-full overflow-hidden bg-white border-2 border-white cursor-pointer product-card rounded-xl transition-300 group"
     >
       <div class="w-full h-64 max-sm:h-44 max-xs:h-30 rounded-t-xl">
         <img
@@ -114,11 +127,8 @@ onMounted(async () => {
           :alt="props.item.name"
         />
       </div>
-      <div>
-        <div class="p-5">
-          <!-- <span class="rounded-md text-[#63676C] px-2 py-1 bg-[#EAEDF0]">{{
-            props.item.address.district.region.name
-          }}</span> -->
+      <div class="flex flex-col justify-between p-5">
+        <div>
           <span
             v-if="props.item.address.district.region.name"
             class="rounded-md text-[#63676C] px-2 py-1 bg-[#EAEDF0]"
@@ -130,20 +140,20 @@ onMounted(async () => {
             {{ props.item.name }}
           </h1>
           <p class="text-xs font-normal md:text-sm text-gray-1 leading-130">
-            {{ formattedDate }}
+            {{ formatDate(props.item.published_at) }}
           </p>
           <p class="text-[#8E9297] text-base font-semibold mt-2 mb-4">
             {{ props.item.seller.phone_number }}
           </p>
-          <div class="flex items-center gap-2">
-            <h4 class="text-base font-bold text-black md:text-2xl leading-130">
-              {{ formatMoneyDecimal(props.item.price) }}
-            </h4>
-            <span
-              class="text-xs font-medium leading-5 uppercase text-blue md:leading-6 md:text-base"
-              >sum</span
-            >
-          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <h4 class="text-base font-bold text-black md:text-2xl leading-130">
+            {{ formatMoneyDecimal(props.item.price) }}
+          </h4>
+          <span
+            class="text-xs font-medium leading-5 uppercase text-blue md:leading-6 md:text-base"
+            >sum</span
+          >
         </div>
       </div>
     </router-link>

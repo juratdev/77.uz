@@ -27,6 +27,7 @@ async function loadProducts() {
     // response.data.results.forEach((item) => {
     //   console.log(item.seller.phone_number);
     // });
+
     product.value = response.data.results;
 
     // number.value = product.value.seller.phone_number.replace(

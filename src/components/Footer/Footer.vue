@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+let thisYear = new Date().getFullYear();
 
 const { t, locale } = useI18n();
 </script>
@@ -74,9 +75,11 @@ const { t, locale } = useI18n();
 
     <div class="py-4 bg-white">
       <div class="flex items-center justify-between containerMain">
-        <div class="flex items-center gap-1 max-sm:block">
+        <div class="flex items-center gap-2 max-sm:block">
           <span class="font-medium text-black">© 77.uz</span>
-          <span class="font-normal text-black"> 2023. Все права защищены</span>
+          <span class="font-normal text-black">
+            {{ thisYear }}. Все права защищены</span
+          >
         </div>
 
         <a
