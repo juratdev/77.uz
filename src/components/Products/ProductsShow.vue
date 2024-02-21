@@ -6,8 +6,8 @@ import { defineAsyncComponent } from "vue";
 import SkeletonLoading from "../ui/SkeletonLoading.vue";
 
 const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
-
-const product = ref([]);
+const number = ref("");
+const product = ref(null);
 const loading = ref(false);
 
 let deviceId = localStorage.getItem("deviceId");
@@ -24,10 +24,15 @@ async function loadProducts() {
         "Device-id": localStorage.getItem("deviceId"),
       },
     });
+    // response.data.results.forEach((item) => {
+    //   console.log(item.seller.phone_number);
+    // });
+    product.value = response.data.results;
 
-    response.data.results.forEach((item) => {
-      product.value.push(item);
-    });
+    // number.value = product.value.seller.phone_number.replace(
+    //   /(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/,
+    //   "$1 $2 $3 $4 $5"
+    // );
 
     return;
   } catch (error) {
@@ -38,9 +43,17 @@ async function loadProducts() {
     }, 500);
   }
 }
-
+// function number() {
+//   let son = product.value.seller.phone_number.replace(
+//     /(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/,
+//     "$1 $2 $3 $4 $5"
+//   );
+//   console.log(son);
+//   return son;
+// }
 onMounted(async () => {
   await loadProducts();
+  // await number();
 });
 </script>
 
@@ -64,6 +77,7 @@ onMounted(async () => {
           v-for="(item, key) in product"
           :key="key"
           :item="item"
+          :price="number"
           :slug="item.slug"
         />
       </div>

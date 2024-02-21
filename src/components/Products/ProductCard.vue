@@ -8,8 +8,13 @@ const props = defineProps({
   item: {
     id: Number,
     name: String,
-    price: String,
+    phone: Number,
+    date: String,
+    price: Number,
     photo: String,
+    seller: {
+      phone_number: Number,
+    },
     published_at: String,
     is_liked: Boolean,
     slug: String,
@@ -20,6 +25,17 @@ const props = defineProps({
 });
 
 const { formattedDate, convertTime } = useTime();
+
+function formatMoneyDecimal(number, fix = 0) {
+  const option2 = {
+    maximumFractionDigits: fix,
+    minimumFractionDigits: fix,
+    decimal: ".",
+  };
+  return number
+    ? new Intl.NumberFormat("ru-RU", option2).format(number)
+    : "0.00";
+}
 
 const like = ref(false);
 const device_id = ref();
@@ -100,9 +116,14 @@ onMounted(async () => {
       </div>
       <div>
         <div class="p-5">
-          <span class="rounded-md text-[#63676C] px-2 py-1 bg-[#EAEDF0]">{{
+          <!-- <span class="rounded-md text-[#63676C] px-2 py-1 bg-[#EAEDF0]">{{
             props.item.address.district.region.name
-          }}</span>
+          }}</span> -->
+          <span
+            v-if="props.item.address.district.region.name"
+            class="rounded-md text-[#63676C] px-2 py-1 bg-[#EAEDF0]"
+            >{{ props.item.address.district.region.name }}</span
+          >
           <h1
             class="mt-5 mb-2 text-lg font-semibold text-black duration-300 md:text-lg leading-130 line-clamp-2 group-hover:text-blue transition-300"
           >
@@ -112,11 +133,11 @@ onMounted(async () => {
             {{ formattedDate }}
           </p>
           <p class="text-[#8E9297] text-base font-semibold mt-2 mb-4">
-            +998 71 200 70 07
+            {{ props.item.seller.phone_number }}
           </p>
           <div class="flex items-center gap-2">
             <h4 class="text-base font-bold text-black md:text-2xl leading-130">
-              {{ props.item.price }}
+              {{ formatMoneyDecimal(props.item.price) }}
             </h4>
             <span
               class="text-xs font-medium leading-5 uppercase text-blue md:leading-6 md:text-base"
