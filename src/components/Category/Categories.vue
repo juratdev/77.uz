@@ -27,10 +27,6 @@ async function loadCategory() {
       throw new Error(response.statusText);
     }
 
-    // response.data.forEach(async (p) => {
-    //   categories.value.push(p);
-    // });
-
     categories.value = response.data;
 
     return;
