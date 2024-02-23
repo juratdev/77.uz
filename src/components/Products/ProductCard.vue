@@ -3,6 +3,7 @@ import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineProps } from "vue";
 import { storeInstance } from "@/instances";
+import { formatDate } from "@/scripts/format-date";
 
 const props = defineProps({
   item: {
@@ -33,21 +34,6 @@ function formatMoneyDecimal(number, fix = 0) {
     ? new Intl.NumberFormat("ru-RU", option2).format(number)
     : "0.00";
 }
-
-const formattedDate = ref("");
-
-const formatDate = (published_at) => {
-  const options = {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  };
-  formattedDate.value = new Intl.DateTimeFormat("uz-UZ", options).format(
-    new Date(published_at)
-  );
-};
 
 const like = ref(false);
 const device_id = ref();
@@ -98,7 +84,6 @@ async function addToSaved(id) {
 onMounted(() => {
   like.value = props.item.is_liked;
   device_id.value = localStorage.getItem("deviceId");
-  formatDate(props.item.published_at);
 });
 
 // onMounted(async () => {
@@ -121,33 +106,35 @@ onMounted(() => {
       :to="'/products/' + props.item.slug"
       class="flex flex-col w-full h-full overflow-hidden bg-white border-2 border-white cursor-pointer product-card rounded-xl transition-300 group"
     >
-      <div class="w-full h-64 max-sm:h-44 max-xs:h-30 rounded-t-xl">
+      <div
+        class="flex-shrink-0 w-full h-64 max-sm:h-44 max-xs:h-30 rounded-t-xl"
+      >
         <img
           :src="props.item.photo"
           class="object-cover w-full h-full rounded-t-lg"
           :alt="props.item.name"
         />
       </div>
-      <div class="flex flex-col justify-between p-5">
-        <div>
+      <div class="flex flex-col items-start h-full p-2 md:p-5">
+        <div class="flex flex-col gap-1 my-2 md:my-4 md:gap-2">
           <span
             v-if="props.item.address.district.region.name"
-            class="rounded-md text-[#63676C] px-2 py-1 bg-[#EAEDF0]"
+            class="rounded-md text-[#63676C] max-w-max whitespace-nowrap px-2 py-1 bg-[#EAEDF0]"
             >{{ props.item.address.district.region.name }}</span
           >
           <h1
-            class="mt-5 mb-2 text-lg font-semibold text-black duration-300 md:text-lg leading-130 line-clamp-2 group-hover:text-blue transition-300"
+            class="mt-5 mb-2 font-semibold text-black duration-300 md:text-lg leading-130 line-clamp-2 group-hover:text-blue transition-300 text-sm leading-130 group-hover/card:text-blue transition-300 h-[36px] md:h-[56px]"
           >
             {{ props.item.name }}
           </h1>
-          <p class="text-xs font-normal md:text-sm text-gray-1 leading-130">
-            {{ formatDate(props.item.published_at) }}
+          <p class="text-xs font-semibold md:text-sm leading-130 text-gray-1">
+            {{ formatDate(new Date(props.item.published_at)) }}
           </p>
           <p class="text-[#8E9297] text-base font-semibold mt-2 mb-4">
             {{ props.item.seller.phone_number }}
           </p>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-end gap-2 mt-auto">
           <h4 class="text-base font-bold text-black md:text-2xl leading-130">
             {{ formatMoneyDecimal(props.item.price) }}
           </h4>

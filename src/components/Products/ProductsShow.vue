@@ -28,16 +28,14 @@ async function loadProducts() {
         "Accept-Language": locale.value,
       },
     });
-    // response.data.results.forEach((item) => {
-    //   console.log(item.seller.phone_number);
-    // });
 
-    product.value = response.data.results;
-
-    // number.value = product.value.seller.phone_number.replace(
-    //   /(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/,
-    //   "$1 $2 $3 $4 $5"
-    // );
+    product.value = response.data.results.map((item) => {
+      item.seller.phone_number = item.seller.phone_number.replace(
+        /(\+\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/,
+        "$1 $2 $3 $4 $5"
+      );
+      return item;
+    });
 
     return;
   } catch (error) {
@@ -48,17 +46,8 @@ async function loadProducts() {
     }, 500);
   }
 }
-// function number() {
-//   let son = product.value.seller.phone_number.replace(
-//     /(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/,
-//     "$1 $2 $3 $4 $5"
-//   );
-//   console.log(son);
-//   return son;
-// }
 onMounted(async () => {
   await loadProducts();
-  // await number();
 });
 
 watch(
