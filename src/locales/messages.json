@@ -4,6 +4,35 @@
       "star": "Sevimlilar",
       "login": "Kirish"
     },
+    "modal": {
+      "loginModal": {
+        "title": "Xush kelibsiz",
+        "minTitle": "Tizimda savdo qilish uchun tizimga kiring",
+        "loginLabel": "Tizimga kirish",
+        "passwordLabel": "Parol",
+        "loginInput": "Loginni kiriting",
+        "passwordInput": "Parolni kiriting",
+        "newPassword": "Parolni unutdingizmi",
+        "buttons": {
+          "hr": "Sotuvchi bo'lishni xohlaysizmi",
+          "apply": "Hozir murojaat qiling"
+        }
+      },
+      "signupModal": {
+        "title": "Hozir murojaat qiling",
+        "loginLabel": "F.I.O.",
+        "productLabel": "Mahsulot nomi",
+        "categoryLabel": "Kategoriya",
+        "numberLabel": "Telefon raqami",
+        "loginInput": "O'zingiz haqida F.I.O.",
+        "productInput": "Mahsulot nomini kiriting",
+        "categoryInput": "Kategoriya",
+        "buttons": {
+          "continue": "Davom eting",
+          "hr": "Sotuvchi bo'lishni xohlaysizmi"
+        }
+      }
+    },
     "categories": {
       "title": "Kategoriyalar",
       "minTitle": "Sizga kerak bo'lgan barcha toifalarni xaridordan topishingiz mumkin",
@@ -34,6 +63,35 @@
     "navbar": {
       "star": "Избранные",
       "login": "Войти"
+    },
+    "modal": {
+      "loginModal": {
+        "title": "Добро пожаловать",
+        "minTitle": "Войти в систему чтобы торговать в системе",
+        "loginLabel": "Логин",
+        "passwordLabel": "Пароль",
+        "loginInput": "Введите логин",
+        "passwordInput": "Введите пароль",
+        "newPassword": "Забыли пароль",
+        "buttons": {
+          "hr": "Хотите стать продавцом",
+          "apply": "Подать заявку"
+        }
+      },
+      "signupModal": {
+        "title": "Подать заявку",
+        "loginLabel": "Ф.И.О.",
+        "productLabel": "Название продукта",
+        "categoryLabel": "Категория",
+        "numberLabel": "Телефон номер",
+        "loginInput": "Введите вашу Ф.И.О.",
+        "productInput": "Введите название продукта",
+        "categoryInput": "Категория",
+        "buttons": {
+          "continue": "Продолжить",
+          "hr": "Хотите стать продавцом"
+        }
+      }
     },
     "categories": {
       "title": "Категории",

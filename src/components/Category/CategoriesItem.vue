@@ -36,7 +36,7 @@ defineProps({
         </p>
       </div>
       <i
-        class="text-[8px] leading-6 -rotate-90 icon-down text-gray-2 group-hover:border-blu transition-300 duration-300 group-hover:text-blue"
+        class="text-[8px] leading-6 -rotate-90 icon-down text-gray-1 group-hover:border-blu transition-300 duration-300 group-hover:text-blue"
       ></i>
     </div>
   </div>

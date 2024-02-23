@@ -4,6 +4,10 @@ import { authInstance, storeInstance } from "@/instances";
 import { defineAsyncComponent } from "vue";
 import { onMounted } from "vue";
 
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
+
 const MapModal = defineAsyncComponent(() => import("./MapModal.vue"));
 const emit = defineEmits(["close:modal"]);
 const typeModal = ref("login");
@@ -145,10 +149,10 @@ onMounted(async () => {
       <div class="flex items-center justify-between titles">
         <div class="left">
           <h1 class="mb-2 text-2xl font-bold leading-130 text-dark title">
-            Добро пожаловать!
+            {{ t("modal.loginModal.title") }}!
           </h1>
           <p class="text-sm font-medium text-secondary leading-130 mb-7 desc">
-            Войти в систему чтобы торговать в системе
+            {{ t("modal.loginModal.minTitle") }}
           </p>
         </div>
         <button
@@ -158,8 +162,10 @@ onMounted(async () => {
       </div>
       <form @submit.prevent="login" class="form">
         <div class="flex flex-col items-start gap-2 form-box">
-          <label for="login" class="text-sm font-medium leading-5 text-gray-1"
-            >Логин</label
+          <label
+            for="login"
+            class="text-sm font-medium leading-5 text-gray-1"
+            >{{ t("modal.loginModal.loginLabel") }}</label
           >
           <input
             v-model="userDetailsLogin.phone_number"
@@ -167,7 +173,7 @@ onMounted(async () => {
             name="login"
             id="login"
             maxlength="99"
-            placeholder="Введите логин"
+            :placeholder="t('modal.loginModal.loginInput')"
             class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none sm:text-sm text-dark disabled:text-gray bg-gray-2 focus-within:border-blue"
           />
         </div>
@@ -177,14 +183,14 @@ onMounted(async () => {
           <label
             for="password"
             class="text-sm font-medium leading-5 text-gray-1"
-            >Пароль</label
+            >{{ t("modal.loginModal.passwordLabel") }}</label
           >
           <input
             v-model="userDetailsLogin.password"
             type="password"
             name="password"
             id="password"
-            placeholder="Введите пароль"
+            :placeholder="t('modal.loginModal.passwordInput')"
             class="w-full py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none focus-within:border-blue ps-4 pe-10 sm:text-sm text-dark disabled:text-gray bg-gray-2"
           />
           <i
@@ -194,19 +200,19 @@ onMounted(async () => {
         <button
           class="text-xs leading-130 text-blue hover:text-blue/95 transition-300"
         >
-          Забыли пароль?
+          {{ t("modal.loginModal.newPassword") }}?
         </button>
         <div class="flex flex-col gap-3 mt-16 buttons">
           <button
             class="bg-blue text-white hover:bg-blue-1 px-6 md:px-7 py-2.5 md:py-3 text-sm md:text-base font-semibold leading-130 rounded-lg transition-300 active:scale-95 disabled:text-gray-2 w-full submit"
             type="submit"
           >
-            Войти
+            {{ t("navbar.login") }}
           </button>
           <div class="flex items-center gap-2">
             <hr class="w-full h-px border-none bg-secondaryGray" />
             <span class="text-xs whitespace-nowrap text-gray-1 leading-130"
-              >Хотите стать продавцом?</span
+              >{{ t("modal.loginModal.buttons.hr") }}?</span
             >
             <hr class="w-full h-px border-none bg-secondaryGray" />
           </div>
@@ -215,7 +221,7 @@ onMounted(async () => {
             @click="switchTypeModal('signup')"
             type="button"
           >
-            Подать заявку
+            {{ t("modal.loginModal.buttons.apply") }}
           </button>
         </div>
       </form>
@@ -227,10 +233,10 @@ onMounted(async () => {
       <div class="flex titles">
         <div class="left">
           <h1 class="mb-2 text-2xl font-bold leading-130 text-dark title">
-            Подать заявку
+            {{ t("modal.signupModal.title") }}
           </h1>
           <p class="text-sm font-medium text-secondary leading-130 mb-7 desc">
-            Войти в систему чтобы торговать в системе
+            {{ t("modal.loginModal.minTitle") }}
           </p>
         </div>
         <button
@@ -240,13 +246,13 @@ onMounted(async () => {
       </div>
       <form class="form">
         <div class="flex flex-col items-start gap-2 form-box">
-          <label for="fio" class="text-sm font-medium leading-5 text-gray-1"
-            >Ф.И.О.</label
-          >
+          <label for="fio" class="text-sm font-medium leading-5 text-gray-1">
+            {{ t("modal.signupModal.loginLable") }}
+          </label>
           <input
             v-model.trim="userDetailsSignUp.full_name"
             class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none sm:text-sm text-dark disabled:text-gray bg-gray-2 focus-within:border-blue"
-            placeholder="Введите вашу Ф.И.О."
+            :placeholder="t('modal.signupModal.loginInput')"
             type="text"
             name="fio"
             id="fio"
@@ -285,7 +291,7 @@ onMounted(async () => {
               class="w-full px-4 py-2 overflow-x-hidden border rounded outline-none scroll-style"
               :value="category.id"
             >
-              {{ category.name }}
+              {{ t(category.name) }}
             </option>
           </select>
           <!-- <div class="relative" id="category">
