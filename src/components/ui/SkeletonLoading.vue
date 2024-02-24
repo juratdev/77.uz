@@ -36,7 +36,7 @@ defineProps({
             <div
               class="text-xs font-normal md:text-sm text-gray-1 leading-130"
             ></div>
-            <div class="text-[#8E9297] text-base font-semibold mt-2 mb-4"></div>
+            <div class="mt-2 mb-4 text-base font-semibold text-secondary"></div>
             <div class="flex items-center gap-2">
               <div
                 class="text-base font-bold text-black md:text-2xl leading-130"

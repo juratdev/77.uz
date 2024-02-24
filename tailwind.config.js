@@ -5,12 +5,13 @@ export default {
     extend: {
       colors: {
         primaryBg: "#F0F3F7",
-        secondary: "#8E9297",
-        secondaryGray: "#EAEDF0",
         dark: "#16191D",
         blue: "#388FF3",
+        secondary: "#8E9297",
+        secondaryGray: "#EAEDF0",
         "gray-1": "#63676c",
         "gray-2": "#f0f3f7",
+        "gray-3": "#D6D6D6",
       },
       boxShadow: {
         "3xl": "0 12px 36px #0e11161a",

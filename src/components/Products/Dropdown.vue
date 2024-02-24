@@ -14,7 +14,7 @@ const handleOpen = () => (open.value = !open.value);
 <template>
   <div class="relative">
     <div
-      class="rounded-lg pl-3 p-2.5 cursor-pointer flex items-center justify-between border border-[#EAEDF0]"
+      class="rounded-lg pl-3 p-2.5 cursor-pointer flex items-center justify-between border border-secondaryGray"
       @click="handleOpen"
     >
       <div class="text-sm leading-5 truncate text-primary">{{ title }}</div>

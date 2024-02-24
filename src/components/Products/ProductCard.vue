@@ -115,7 +115,7 @@ onMounted(() => {
         <div class="flex flex-col gap-1 my-2 md:my-4 md:gap-2">
           <span
             v-if="props.item.address.district.region.name"
-            class="rounded-md text-[#63676C] max-w-max whitespace-nowrap px-2 pb-1 bg-[#EAEDF0]"
+            class="px-2 pb-1 rounded-md text-gray-1 max-w-max whitespace-nowrap bg-secondaryGray"
             >{{ props.item.address.district.region.name }}</span
           >
           <h1
