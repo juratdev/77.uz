@@ -85,10 +85,6 @@ onMounted(() => {
   like.value = props.item.is_liked;
   device_id.value = localStorage.getItem("deviceId");
 });
-
-// onMounted(async () => {
-//   await convertTime(props.item.published_at);
-// });
 </script>
 
 <template>
