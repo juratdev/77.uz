@@ -119,18 +119,18 @@ onMounted(() => {
         <div class="flex flex-col gap-1 my-2 md:my-4 md:gap-2">
           <span
             v-if="props.item.address.district.region.name"
-            class="rounded-md text-[#63676C] max-w-max whitespace-nowrap px-2 py-1 bg-[#EAEDF0]"
+            class="rounded-md text-[#63676C] max-w-max whitespace-nowrap px-2 pb-1 bg-[#EAEDF0]"
             >{{ props.item.address.district.region.name }}</span
           >
           <h1
-            class="mt-5 mb-2 font-semibold text-black duration-300 md:text-lg leading-130 line-clamp-2 group-hover:text-blue transition-300 text-sm leading-130 group-hover/card:text-blue transition-300 h-[36px] md:h-[56px]"
+            class="font-semibold text-black duration-300 md:text-lg leading-130 line-clamp-2 group-hover:text-blue transition-300 text-sm leading-130 group-hover/card:text-blue transition-300 h-[36px] md:h-[56px]"
           >
             {{ props.item.name }}
           </h1>
           <p class="text-xs font-semibold md:text-sm leading-130 text-gray-1">
             {{ formatDate(new Date(props.item.published_at)) }}
           </p>
-          <p class="text-[#8E9297] text-base font-semibold mt-2 mb-4">
+          <p class="mt-2 text-base font-semibold text-secondary">
             {{ props.item.seller.phone_number }}
           </p>
         </div>
