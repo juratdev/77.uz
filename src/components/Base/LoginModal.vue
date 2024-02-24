@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { authInstance, storeInstance } from "@/instances";
 import { defineAsyncComponent } from "vue";
 import { onMounted } from "vue";
@@ -28,11 +28,13 @@ const userDetailsSignUp = ref({
   },
 });
 
-const formatPhoneNumber = (event) => {
-  const x = event.target.value
+const formattedPhoneNumber = ref("");
+
+const formatPhoneNumber = (value) => {
+  const x = value
     .replace(/\D/g, "")
     .match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-  userDetailsSignUp.phone_number.value =
+  formattedPhoneNumber.value =
     (x[1] ? "(" + x[1] : "") +
     (x[2] ? ") " + x[2] : "") +
     (x[3] ? " " + x[3] : "") +
@@ -45,7 +47,12 @@ const categories = ref([]);
 
 async function fetchCategories() {
   try {
-    const response = await storeInstance.get("/category/");
+    const response = await storeInstance.get("/category/", {
+      headers: {
+        "Accept-Language": locale.value,
+      },
+    });
+
     if (!response) throw new Error("Internet bilan aloqa mavjud emas");
     if (response.status !== 200) throw new Error(response.statusText);
 
@@ -134,6 +141,9 @@ async function openMap() {
 
 onMounted(async () => {
   await fetchCategories();
+});
+watch(userDetailsSignUp.phone_number, (newValue) => {
+  formatPhoneNumber(newValue);
 });
 </script>
 
@@ -247,7 +257,7 @@ onMounted(async () => {
       <form class="form">
         <div class="flex flex-col items-start gap-2 form-box">
           <label for="fio" class="text-sm font-medium leading-5 text-gray-1">
-            {{ t("modal.signupModal.loginLable") }}
+            {{ t("modal.signupModal.loginLabel") }}
           </label>
           <input
             v-model.trim="userDetailsSignUp.full_name"

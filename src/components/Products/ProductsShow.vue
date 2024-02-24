@@ -6,6 +6,7 @@ import SkeletonLoading from "../ui/SkeletonLoading.vue";
 
 const ProductCard = defineAsyncComponent(() => import("./ProductCard.vue"));
 import { useI18n } from "vue-i18n";
+import { formatDate } from "@/scripts/format-date";
 
 const { t, locale } = useI18n();
 
@@ -15,7 +16,7 @@ const loading = ref(false);
 
 let deviceId = localStorage.getItem("deviceId");
 
-async function loadProducts() {
+async function loadProducts(lang) {
   if (!deviceId) {
     deviceId = Math.floor(Math.random() * 10000000000 + 1) + "";
     localStorage.setItem("deviceId", deviceId);
@@ -34,10 +35,9 @@ async function loadProducts() {
         /(\+\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/,
         "$1 $2 $3 $4 $5"
       );
+      item.published_at = formatDate(item.published_at, "DD MMMM, HH:mm", lang);
       return item;
     });
-
-    return;
   } catch (error) {
     console.error(error);
   } finally {
@@ -47,14 +47,14 @@ async function loadProducts() {
   }
 }
 onMounted(async () => {
-  await loadProducts();
+  await loadProducts(locale.value);
 });
 
 watch(
   locale,
   async (newValue, oldValue) => {
     if (newValue !== oldValue) {
-      await loadProducts();
+      await loadProducts(newValue);
     }
   },
   { deep: true }

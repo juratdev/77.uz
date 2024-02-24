@@ -124,7 +124,7 @@ onMounted(() => {
             {{ props.item.name }}
           </h1>
           <p class="text-xs font-semibold md:text-sm leading-130 text-gray-1">
-            {{ formatDate(new Date(props.item.published_at)) }}
+            {{ props.item.published_at }}
           </p>
           <p class="mt-2 text-base font-semibold text-secondary">
             {{ props.item.seller.phone_number }}
