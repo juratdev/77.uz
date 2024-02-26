@@ -3,7 +3,6 @@ import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineProps } from "vue";
 import { storeInstance } from "@/instances";
-import { formatDate } from "@/scripts/format-date";
 
 const props = defineProps({
   item: {

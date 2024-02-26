@@ -180,7 +180,7 @@ const dataOptions2 = [
                         class="icon-tick text-[9px] top-1/2 left-1/2 leading-5 text-white transform -translate-x-1/2 -translate-y-1/2 transition-200 absolute z-[1]"
                       ></span>
                     </span>
-                    <div class="">
+                    <div>
                       <span
                         class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
                         >Все разделы</span
@@ -215,6 +215,15 @@ const dataOptions2 = [
                       </div>
                     </div>
                   </div>
+                  <!-- <button
+                    class="bg-blue w-full text-white hover:bg-blue-1 px-6 py-2.5 text-sm font-semibold leading-5 rounded-lg relative transition-300 active:scale-95 disabled:bg-gray-bg disabled:text-gray-2"
+                    type="submit"
+                  >
+                    <span
+                      class="flex items-center justify-center gap-2 opacity-100 transition-300 whitespace-nowrap"
+                      ><span class="">Применить фильтр</span></span
+                    >
+                  </button> -->
                 </div>
               </div>
             </div>
