@@ -3,8 +3,8 @@ import { ref, watch } from "vue";
 import { authInstance, storeInstance } from "@/instances";
 import { defineAsyncComponent } from "vue";
 import { onMounted } from "vue";
-
 import { useI18n } from "vue-i18n";
+import Dropdown from "../Products/Dropdown.vue";
 
 const { t, locale } = useI18n();
 
@@ -44,6 +44,7 @@ const formatPhoneNumber = (value) => {
 const userDetailsLogin = ref({ phone_number: "", password: "" });
 
 const categories = ref([]);
+const passwordInputType = ref("password");
 
 async function fetchCategories() {
   try {
@@ -98,7 +99,10 @@ async function login() {
     alert(error.message);
   }
 }
-
+function showHidePassword() {
+  passwordInputType.value =
+    passwordInputType.value === "password" ? "text" : "password";
+}
 async function openMap() {
   try {
     if (
@@ -182,7 +186,7 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
             type="text"
             name="login"
             id="login"
-            maxlength="99"
+            maxlength="7"
             :placeholder="t('modal.loginModal.loginInput')"
             class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none sm:text-sm text-dark disabled:text-gray bg-gray-2 focus-within:border-blue"
           />
@@ -197,14 +201,18 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
           >
           <input
             v-model="userDetailsLogin.password"
-            type="password"
+            :type="passwordInputType"
             name="password"
             id="password"
             :placeholder="t('modal.loginModal.passwordInput')"
             class="w-full py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none focus-within:border-blue ps-4 pe-10 sm:text-sm text-dark disabled:text-gray bg-gray-2"
           />
           <i
-            class="absolute z-50 text-xl leading-6 transition duration-300 cursor-pointer hover:text-dark right-4 top-10 icon-eye-closed text-gray-1"
+            @click="showHidePassword"
+            :class="
+              passwordInputType === 'password' ? 'icon-eye-closed' : 'WTF'
+            "
+            class="absolute z-50 text-xl leading-6 transition duration-300 cursor-pointer hover:text-dark right-4 top-10 text-gray-1"
           ></i>
         </div>
         <button
@@ -289,7 +297,7 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
             class="text-sm font-medium leading-5 text-gray-1"
             >Категория</label
           >
-          <select
+          <!-- <select
             v-model.trim="userDetailsSignUp.category"
             class="flex justify-between w-full px-4 py-3 pl-3 border rounded-lg outline-none cursor-pointer bg-gray-2"
             name="product-category"
@@ -303,9 +311,14 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
             >
               {{ t(category.name) }}
             </option>
-          </select>
+          </select> -->
+          <Dropdown
+          
+          title="Выберите категорию"
+            :options="categories.map((item) => item.name)"
+          />
           <!-- <div class="relative" id="category">
-            <select
+            <div
               v-model.trim="userDetailsSignUp.category"
               name="product-category"
               id="product-category"
@@ -317,11 +330,11 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
               <span
                 class="icon-chevron transition-300 inline-block text-gray text-2xl leading-6 !rotate-90"
               ></span>
-            </select>
+            </div>
             <div
               class="absolute top-full w-full bg-white rounded-lg z-10 translate-y-3 overflow-x-hidden max-h-[318px] scroll-style options"
             >
-              <option
+              <div
                 v-for="category in categories"
                 :key="category.id"
                 :value="category.id"
@@ -330,7 +343,7 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
                 <p class="text-base font-medium text-dark leading-130">
                   {{ category.name }}
                 </p>
-              </option>
+              </div>
             </div>
           </div> -->
         </div>

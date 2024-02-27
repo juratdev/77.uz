@@ -1,28 +1,59 @@
 <script setup>
-import { storeInstance } from "@/instances";
+import { storeInstance, usingInstance } from "@/instances";
 import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineAsyncComponent } from "vue";
 import SkeletonLoading from "../../components/ui/SkeletonLoading.vue";
 import Dropdown from "../../components/Products/Dropdown.vue";
+import Accordion from "../../components/Accordion.vue";
+import { useI18n } from "vue-i18n";
+import { watch } from "vue";
+const { t, locale } = useI18n();
 
 const ProductCard = defineAsyncComponent(() =>
   import("../../components/Products/ProductCard.vue")
 );
-
-// const like = ref(false);
 const loading = ref(false);
-// const products = ref([]);
 const count = ref(0);
 const product = ref([]);
 const page = ref(0);
+const categories = ref([]);
 
-// async function pushProducts(product) {
-//   products.value.push(product);
-// }
+const data = ref([]);
+const regions = ref([]);
+const districts = ref([]);
+
+const regionValue = ref(null);
+const districtValue = ref(null);
+const sortValue = ref(null);
+const subCategoryValue = ref(null);
 
 let deviceId = localStorage.getItem("deviceId");
 
+async function getCategoryWithChildren() {
+  try {
+    const response = await storeInstance.get(`/categories-with-childs/`, {
+      headers: {
+        "Accept-Language": locale._value,
+      },
+    });
+    categories.value = response.data.map((el) => {
+      let children = el.childs.map((item) => {
+        return {
+          name: item.name,
+          checked: false,
+        };
+      });
+      return {
+        name: el.name,
+        children,
+        checked: false,
+      };
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
 async function loadProducts() {
   if (!deviceId) {
     deviceId = Math.floor(Math.random() * 10000000000 + 1) + "";
@@ -54,30 +85,43 @@ async function loadProducts() {
   }
 }
 
-onMounted(async () => {
-  await loadProducts();
+const updateRegionValue = (value) => {
+  for (let i = 0; i < data.value.length; i++) {
+    if (data.value[i].name == value) {
+      districts.value = data.value[i].districts.map((item) => item.name);
+      break;
+    }
+  }
+  regionValue.value = data;
+};
+const updateDistrictValue = (value) => {
+  districtValue.value = value;
+};
+
+async function getData() {
+  try {
+    const response = await usingInstance.get(`/regions-with-districts/`, {
+      headers: {
+        "Accept-Language": locale._value,
+      },
+    });
+
+    data.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+watch(data, () => {
+  if (data && Array.isArray(data.value)) {
+    regions.value = data.value.map((item) => item.name);
+  }
 });
 
-const dataOptions1 = [
-  "Андижанская область",
-  "Бухарская область",
-  "Джизакская область",
-  "Кашкадарьинская область",
-  "Навоийская область",
-  "Наманганская область",
-  "Самаркандская область",
-  "Город Ташкент",
-];
-const dataOptions2 = [
-  "Андижанская область",
-  "Бухарская область",
-  "Джизакская область",
-  "Кашкадарьинская область",
-  "Навоийская область",
-  "Наманганская область",
-  "Самаркандская область",
-  "Город Ташкент",
-];
+onMounted(async () => {
+  await loadProducts();
+  await getData();
+  await getCategoryWithChildren();
+});
 </script>
 
 <template>
@@ -97,13 +141,22 @@ const dataOptions2 = [
             <label for="" class="text-sm font-medium leading-5 text-gray"
               >Регион</label
             >
-            <Dropdown title="Выберите регион" :options="dataOptions1" />
+            <Dropdown
+              @value="updateRegionValue"
+              title="Выберите регион"
+              :options="regions"
+            />
           </div>
           <div class="flex flex-col gap-2">
             <label for="" class="text-sm font-medium leading-5 text-gray"
               >Район/город</label
             >
-            <Dropdown title="Выберите район/город" :options="dataOptions2" />
+            <Dropdown
+              @value="updateDistrictValue"
+              :disabled="!regionValue"
+              title="Выберите район/город"
+              :options="districts"
+            />
           </div>
 
           <div class="flex flex-col gap-2">
@@ -180,7 +233,7 @@ const dataOptions2 = [
                         class="icon-tick text-[9px] top-1/2 left-1/2 leading-5 text-white transform -translate-x-1/2 -translate-y-1/2 transition-200 absolute z-[1]"
                       ></span>
                     </span>
-                    <div>
+                    <div class="">
                       <span
                         class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
                         >Все разделы</span
@@ -188,42 +241,155 @@ const dataOptions2 = [
                     </div>
                   </div>
                   <div class="w-full">
-                    <div class="w-full border-b border-gray-4">
-                      <div class="flex items-center w-full gap-2 group">
+                    <div class="w-full">
+                      <Accordion
+                        v-for="category in categories"
+                        :title="category.name"
+                        :options="category.children"
+                      />
+                      <!-- <div class="pl-4">
                         <div
-                          class="group flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b-0 py-2.5"
+                          class="w-full border-b border-gray-5 last:!border-b-0 py-2.5"
                         >
-                          <span
-                            class="duration-300 ease-in-out relative shrink-0 inline-block h-5 w-5 rounded-md border border-gray-3 group-hover:border-blue !border-white/20 !bg-blue"
-                            ><span
-                              class="icon-tick text-[9px] top-1/2 left-1/2 leading-5 text-white transform -translate-x-1/2 -translate-y-1/2 transition-200 absolute z-[1]"
-                            ></span
-                          ></span>
+                          <div class="flex group">
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                ></span
+                              ></span>
+                            </div>
+                            <div
+                              class="flex items-center justify-between flex-grow cursor-pointer"
+                            >
+                              <p
+                                class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                              >
+                                <span>Аксессуары</span>
+                              </p>
+                              <div
+                                class="text-[9px] font-bold leading-5 -rotate-90 icon-down transition-300 text-gray-1"
+                              ></div>
+                            </div>
+                          </div>
+                          <div class="pl-4">
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b border-gray-4 last:!border-b-0 last:!mb-0 py-2.5 last:pb-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span class=""
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                  >Сумки и рюкзаки</span
+                                ></span
+                              >
+                            </div>
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b border-gray-4 last:!border-b-0 last:!mb-0 py-2.5 last:pb-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span class=""
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                  >Кошельки</span
+                                ></span
+                              >
+                            </div>
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b border-gray-4 last:!border-b-0 last:!mb-0 py-2.5 last:pb-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span class=""
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                  >Ремни</span
+                                ></span
+                              >
+                            </div>
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b border-gray-4 last:!border-b-0 last:!mb-0 py-2.5 last:pb-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span class=""
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                  >Перчатки и шарфы</span
+                                ></span
+                              >
+                            </div>
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b border-gray-4 last:!border-b-0 last:!mb-0 py-2.5 last:pb-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span class=""
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                  >Шапки</span
+                                ></span
+                              >
+                            </div>
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b border-gray-4 last:!border-b-0 last:!mb-0 py-2.5 last:pb-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span class=""
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                  >Кепки</span
+                                ></span
+                              >
+                            </div>
+                            <div
+                              class="group w-full flex items-center gap-2 relative select-none min-h-[20px] cursor-pointer border-b border-gray-4 last:!border-b-0 last:!mb-0 py-2.5 last:pb-0"
+                            >
+                              <span
+                                class="relative inline-block w-5 h-5 duration-300 ease-in-out border rounded-md shrink-0 border-gray-3 group-hover:border-blue"
+                                ><span
+                                  class="rounded-3xl w-2.5 h-0.5 bg-white transition-300 absolute-center z-[1] opacity-0"
+                                ></span></span
+                              ><span class=""
+                                ><span
+                                  class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
+                                  >Шляпа и панама</span
+                                ></span
+                              >
+                            </div>
+                          </div>
                         </div>
-                        <div
-                          class="flex items-center justify-between flex-grow cursor-pointer"
-                        >
-                          <p
-                            class="text-sm font-medium leading-130 text-dark transition-300 group-hover:text-blue"
-                          >
-                            Мужская одежда
-                          </p>
-                          <div
-                            class="text-[9px] font-bold leading-5 -rotate-90 icon-down transition-300 text-gray-1"
-                          ></div>
-                        </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
-                  <!-- <button
-                    class="bg-blue w-full text-white hover:bg-blue-1 px-6 py-2.5 text-sm font-semibold leading-5 rounded-lg relative transition-300 active:scale-95 disabled:bg-gray-bg disabled:text-gray-2"
-                    type="submit"
-                  >
-                    <span
-                      class="flex items-center justify-center gap-2 opacity-100 transition-300 whitespace-nowrap"
-                      ><span class="">Применить фильтр</span></span
-                    >
-                  </button> -->
                 </div>
               </div>
             </div>
@@ -239,7 +405,7 @@ const dataOptions2 = [
               >
                 Продукты
               </h1>
-              <div class="flex items-center w-full gap-4 mt-14">
+              <div class="fleclick-outsidex items-center w-full gap-4 mt-14">
                 <div class="w-full top-[-2rem] relative max-sm:w-full">
                   <i
                     class="icon-search absolute left-3 top-5 text-[1.2rem] text-[#D5D8DB]"
