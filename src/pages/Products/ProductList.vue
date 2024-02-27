@@ -405,7 +405,7 @@ onMounted(async () => {
               >
                 Продукты
               </h1>
-              <div class="fleclick-outsidex items-center w-full gap-4 mt-14">
+              <div class="flex items-center w-full gap-4 mt-14">
                 <div class="w-full top-[-2rem] relative max-sm:w-full">
                   <i
                     class="icon-search absolute left-3 top-5 text-[1.2rem] text-[#D5D8DB]"
