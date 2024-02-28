@@ -313,8 +313,7 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
             </option>
           </select> -->
           <Dropdown
-          
-          title="Выберите категорию"
+            title="Выберите категорию"
             :options="categories.map((item) => item.name)"
           />
           <!-- <div class="relative" id="category">

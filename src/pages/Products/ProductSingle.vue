@@ -69,7 +69,7 @@ onMounted(async () => {
             ><a
               aria-current="page"
               href="/product/vetrovka-dlia-muzhchin-dozhdevik-kurtka"
-              class="router-link-active router-link-exact-active pointer-events-none !text-gray-2 transition-300 max-w-full flex-y-center cursor-pointer min-w-max group-last:min-w-[100px] sm:group-last:min-w-[200px] breadcrumb-menu line-clamp-1 whitespace-nowrap text-dark leading-130 text-sm font-medium transition-300 hover:text-blue"
+              class="router-link-active router-link-exact-active pointer-events-none transition-300 max-w-full flex-y-center cursor-pointer min-w-max group-last:min-w-[100px] sm:group-last:min-w-[200px] breadcrumb-menu line-clamp-1 whitespace-nowrap text-dark leading-130 text-sm font-medium transition-300 hover:text-blue"
               >Ветровка для мужчин, дождевик,...</a
             >
           </div>

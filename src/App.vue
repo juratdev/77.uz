@@ -1,30 +1,21 @@
 <script setup>
-import CustomHeader from "./components/Base/CustomHeader.vue";
-import Footer from "./components/Footer/Footer.vue";
-import { RouterView } from "vue-router";
+import Defoult from "./layouts/defoult.vue";
+import empty from "./layouts/empty.vue";
+import { useRoute } from "vue-router";
+
+const layouts = {
+  empty: empty,
+  default: Defoult,
+};
+const route = useRoute();
 </script>
 
 <template>
   <div class="flex flex-col min-h-screen bg-primaryBg">
-    <!-- HEADER -->
-    <CustomHeader />
-    <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-    <Footer />
-    <!-- FOOTER -->
+    <component :is="layouts[route.meta.layout]">
+      <router-view></router-view>
+    </component>
   </div>
 </template>
 
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
+<style></style>

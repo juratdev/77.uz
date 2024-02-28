@@ -6,39 +6,50 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("@/layouts/TheBase.vue"),
-      children: [
-        {
-          path: "",
-          name: "home-page",
-          component: () => import("@/pages/Base/HomePage.vue"),
-        },
-        {
-          path: "category/:id",
-          name: "category-id",
-          component: () => import("@/pages/Category/CategoryId.vue"),
-        },
-        {
-          path: "products/:id",
-          name: "product-single",
-          component: () => import("@/pages/Products/ProductSingle.vue"),
-        },
-        {
-          path: "products/list",
-          name: "product-list",
-          component: () => import("@/pages/Products/ProductList.vue"),
-        },
-        {
-          path: "favourites",
-          name: "favourites",
-          component: () => import("@/pages/Products/ProductFavorite.vue"),
-        },
-      ],
+      meta: {
+        layout: "default",
+      },
+      component: () => import("@/pages/Base/HomePage.vue"),
+    },
+    {
+      path: "/category/:id",
+      name: "category-id",
+      meta: {
+        layout: "default",
+      },
+      component: () => import("@/pages/Category/CategoryId.vue"),
+    },
+    {
+      path: "/products/:id",
+      name: "product-single",
+      meta: {
+        layout: "default",
+      },
+      component: () => import("@/pages/Products/ProductSingle.vue"),
+    },
+    {
+      path: "/products/list",
+      name: "product-list",
+      meta: {
+        layout: "default",
+      },
+      component: () => import("@/pages/Products/ProductList.vue"),
+    },
+    {
+      path: "/favourites",
+      name: "favourites",
+      meta: {
+        layout: "default",
+      },
+      component: () => import("@/pages/Products/ProductFavorite.vue"),
     },
 
     {
       path: "/:catchAll(.*)",
       name: "Not Found",
+      meta: {
+        layout: "empty",
+      },
       component: () => import("@/pages/NotFound.vue"),
     },
   ],
