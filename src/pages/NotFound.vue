@@ -5,7 +5,7 @@
     <div
       class="bg-[url('/public/images/circle.svg')] bg-no-repeat bg-center bg-gray-2 px-4"
     >
-      <div class="flex justify-center">
+      <div class="flex justify-center mt-10">
         <img
           class="h-auto max-w-full"
           src="../../public/images/notFound.svg"
