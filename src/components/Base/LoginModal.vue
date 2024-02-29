@@ -199,7 +199,7 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
           <i
             @click="showHidePassword"
             :class="
-              passwordInputType === 'password' ? 'icon-eye-closed' : 'WTF'
+              passwordInputType === 'password' ? 'icon-eye-closed' : 'icon-eye'
             "
             class="absolute z-50 text-xl leading-6 transition duration-300 cursor-pointer hover:text-dark right-4 top-10 text-gray-1"
           ></i>
@@ -302,7 +302,9 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
             </option>
           </select> -->
           <Dropdown
+            v-model="userDetailsSignUp.category"
             title="Выберите категорию"
+            class="border rounded-lg bg-gray-2"
             :options="categories.map((item) => item.name)"
           />
           <!-- <div class="relative" id="category">
