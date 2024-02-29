@@ -6,6 +6,8 @@ import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import Dropdown from "../Products/Dropdown.vue";
 
+import InputMask from "primevue/inputmask";
+
 const { t, locale } = useI18n();
 
 const MapModal = defineAsyncComponent(() => import("./MapModal.vue"));
@@ -27,19 +29,6 @@ const userDetailsSignUp = ref({
     long: 0,
   },
 });
-
-const formattedPhoneNumber = ref("");
-
-const formatPhoneNumber = (value) => {
-  const x = value
-    .replace(/\D/g, "")
-    .match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-  formattedPhoneNumber.value =
-    (x[1] ? "(" + x[1] : "") +
-    (x[2] ? ") " + x[2] : "") +
-    (x[3] ? " " + x[3] : "") +
-    (x[4] ? " " + x[4] : "");
-};
 
 const userDetailsLogin = ref({ phone_number: "", password: "" });
 
@@ -350,21 +339,22 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
           <label for="phone" class="text-sm font-medium leading-5 text-gray-1"
             >Телефон номер</label
           >
+
           <div class="relative">
             <span
               class="absolute left-2 inline-block mr-1 text-lg font-normal leading-5 top-[13px] text-dark md:text-sm"
             >
               +998
             </span>
-            <input
+            <InputMask
               v-model="userDetailsSignUp.phone_number"
-              @input="formatPhoneNumber"
+              mask="(99)-999-99-99"
               class="w-full px-4 py-3 text-base leading-5 transition duration-300 border rounded-lg outline-none ps-10 focus-within:border-blue pe-10 sm:text-sm text-dark bg-gray-2"
               placeholder="(__) ___-__-__"
               type="text"
               name="phone"
               id="phone"
-            />
+            ></InputMask>
           </div>
         </div>
         <div class="flex flex-col gap-3 mt-16 buttons">

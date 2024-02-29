@@ -4,7 +4,7 @@ import { onMounted } from "vue";
 import { ref } from "vue";
 import { defineAsyncComponent } from "vue";
 import SkeletonLoading from "../../components/ui/SkeletonLoading.vue";
-
+import Nodata from "../../components/noData.vue";
 const ProductCard = defineAsyncComponent(() =>
   import("../../components/Products/ProductCard.vue")
 );
@@ -45,7 +45,7 @@ onMounted(() => {
   <div
     class="flex flex-col items-center justify-center pt-10 pb-10 products containerMain"
   >
-    <div v-if="!loading">
+    <div v-if="!loading && products.length">
       <div
         class="grid w-full grid-cols-2 gap-6 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10"
       >
@@ -57,6 +57,7 @@ onMounted(() => {
         />
       </div>
     </div>
+    <Nodata v-if="!loading && !products.length" />
     <div class="w-full" v-if="loading">
       <div
         class="grid w-full grid-cols-2 gap-6 my-6 sm:grid-cols-3 lg:grid-cols-4 md:my-10"
