@@ -43,6 +43,14 @@ const router = createRouter({
       },
       component: () => import("@/pages/Products/ProductFavorite.vue"),
     },
+    {
+      path: "/pages/:slug",
+      name: "siteDirection",
+      meta: {
+        layout: "default",
+      },
+      component: () => import("@/pages/UsingRouls.vue"),
+    },
 
     {
       path: "/:catchAll(.*)",

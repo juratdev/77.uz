@@ -24,10 +24,10 @@
         <div
           v-for="(item, index) in options"
           :key="index"
-          class="p-4 duration-300 border-b cursor-pointer transition-300 hover:bg-gray-2 border-white-4 last:border-none"
+          class="p-4 duration-300 border-b cursor-pointer transition-300 hover:bg-gray-bg border-white-4 last:border-none"
         >
           <p
-            @click="updateValue(item.name, item.id)"
+            @click="updateValue(item)"
             class="text-base font-medium text-dark leading-130"
           >
             {{ item.name }}
@@ -37,6 +37,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { onMounted } from "vue";
 import { ref, defineProps, defineEmits } from "vue";
@@ -46,13 +47,14 @@ let props = defineProps({
   options: Array,
   disabled: Boolean,
 });
-const emit = defineEmits(["value"]);
+const emit = defineEmits(["value", "option"]);
 const open = ref(false);
 let dropdownVal = ref("");
 
 function updateValue(item) {
-  dropdownVal.value = item;
-  emit("value", [item, index]);
+  dropdownVal.value = item.name;
+  emit("value", item.name);
+  emit("option", item.id);
   open.value = false;
 }
 
@@ -66,4 +68,3 @@ onMounted(() => {
   dropdownVal.value = props.title;
 });
 </script>
-<script></script>

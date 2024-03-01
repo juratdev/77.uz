@@ -4,7 +4,7 @@ import { authInstance, storeInstance } from "@/instances";
 import { defineAsyncComponent } from "vue";
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import Dropdown from "../Products/Dropdown.vue";
+import DropdownWithOption from "../Products/DropdownWithOption.vue";
 
 import InputMask from "primevue/inputmask";
 
@@ -35,6 +35,12 @@ const userDetailsLogin = ref({ phone_number: "", password: "" });
 const categories = ref([]);
 const passwordInputType = ref("password");
 
+const getSignUpDropdownValue = (value) => {
+  userDetailsSignUp.value = {
+    ...userDetailsSignUp.value,
+    category: value,
+  };
+};
 async function fetchCategories() {
   try {
     const response = await storeInstance.get("/category/", {
@@ -301,11 +307,13 @@ watch(userDetailsSignUp.phone_number, (newValue) => {
               {{ t(category.name) }}
             </option>
           </select> -->
-          <Dropdown
-            v-model="userDetailsSignUp.category"
+          <DropdownWithOption
             title="Выберите категорию"
             class="border rounded-lg bg-gray-2"
-            :options="categories.map((item) => item.name)"
+            :options="
+              categories.map((item) => ({ name: item.name, id: item.id }))
+            "
+            @option="getSignUpDropdownValue"
           />
           <!-- <div class="relative" id="category">
             <div

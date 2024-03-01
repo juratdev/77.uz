@@ -1,9 +1,27 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { usingInstance } from "../../instances/index.js";
 let thisYear = new Date().getFullYear();
 
 const { t } = useI18n();
+let fetchDatas = ref(null);
+
+const dataSlugFromApi = async () => {
+  try {
+    const response = await usingInstance.get("/pages/");
+
+    fetchDatas.value = response.data;
+
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+onMounted(() => {
+  dataSlugFromApi();
+});
 </script>
 <template>
   <footer class="mt-auto">
@@ -24,18 +42,24 @@ const { t } = useI18n();
         <div
           class="flex justify-center items-center gap-y-4 gap-x-4 sm:gap-x-6 md:gap-x-[72px] mt-6 flex-wrap"
         >
-          <a
-            href="#"
+          <router-link
+            :to="
+              '/pages/' +
+              (fetchDatas && fetchDatas[0] ? fetchDatas[0].slug : '')
+            "
             target="_blank"
             class="flex items-center gap-1 text-sm font-semibold duration-300 md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
             ><img src="../../assets/images/footer/symbol.svg" alt="Symbol" />
-            {{ t("footer.buttons.firstButton") }}</a
-          ><a
-            href="#"
+            {{ t("footer.buttons.firstButton") }}</router-link
+          ><router-link
+            :to="
+              '/pages/' +
+              (fetchDatas && fetchDatas[1] ? fetchDatas[1].slug : '')
+            "
             target="_blank"
             class="flex items-center gap-1 text-sm font-semibold duration-300 md:text-xl leading-130 text-dark hover:text-blue transition-300 flex-y-center"
             ><img src="../../assets/images/footer/symbol.svg" alt="Symbol" />
-            {{ t("footer.buttons.secondButton") }}</a
+            {{ t("footer.buttons.secondButton") }}</router-link
           ><a
             href="tel: +998885005000"
             target="_blank"
